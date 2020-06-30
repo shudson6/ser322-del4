@@ -1,0 +1,6 @@
+#intellij stuff
+.idea/
+*.iml
+
+#vim stuff
+*.*~
