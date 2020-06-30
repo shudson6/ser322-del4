@@ -1,6 +1,8 @@
 #intellij stuff
 .idea/
+out/
 *.iml
+*.form
 
 #vim stuff
 *.*~
