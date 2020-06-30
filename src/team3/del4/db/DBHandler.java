@@ -34,24 +34,14 @@ public class DBHandler {
         }
     }
 
-    final Connection conn;
-
     // prevent direct instantiation of this class
-    protected DBHandler() throws SQLException {
-        conn = DriverManager.getConnection(dbProps.getProperty("dbUrl"), dbProps);
+    protected DBHandler() {}
+
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(dbProps.getProperty("dbUrl"), dbProps);
     }
 
-    public Connection getConnection() {
-        return conn;
-    }
-
-    public Statement getStatement() {
-        try {
-            return conn.createStatement();
-        } catch (SQLException ex) {
-            System.out.println("[DEBUG] Could not create Statement object!");
-            ex.printStackTrace();
-            return null;
-        }
+    public Statement getStatement() throws SQLException {
+        return getConnection().createStatement();
     }
 }
