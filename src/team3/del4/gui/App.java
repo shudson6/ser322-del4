@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.Properties;
 
-public class App extends JFrame {
+public class App {
     public void createAndShowGUI() {
-
+        new AppFrame().setVisible(true);
     }
 
     public static void main(String[] args) {
