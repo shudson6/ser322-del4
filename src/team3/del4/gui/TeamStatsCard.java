@@ -51,15 +51,13 @@ public class TeamStatsCard extends JPanel {
     }
 
     private ComboBoxModel<String> createDivCBM(List<String> divs) {
-        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
-        cbm.addElement("Any");
-        cbm.addAll(divs);
+        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>(divs.toArray(new String[0]));
+        cbm.insertElementAt("Any", 0);
         return cbm;
     }
 
     private ComboBoxModel<String> createTeamCBM(List<String> teams) {
-        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>();
-        cbm.addAll(teams);
+        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>(teams.toArray(new String[0]));
         return cbm;
     }
 }
