@@ -30,6 +30,7 @@ public class AppFrame extends JFrame {
         getTeamStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetTeamStats"));
         menuPanel.add(getTeamStatsBtn);
         getPlayerStatsBtn = new JButton("Get Player Statistics");
+        getPlayerStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayerStats"));
         menuPanel.add(getPlayerStatsBtn);
         addPlayerBtn = new JButton("Add player");
         addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "AddPlayer"));
@@ -42,6 +43,8 @@ public class AppFrame extends JFrame {
 
         // create team stats query panel
         cardPanel.add(new TeamStatsCard(), "GetTeamStats");
+        // panel to get player stats
+        cardPanel.add(new PlayerStatsCard(), "GetPlayerStats");
         // panel to add a player
         cardPanel.add(new PlayerInsertCard(), "AddPlayer");
         // panel to add kicking stats
@@ -62,3 +65,4 @@ public class AppFrame extends JFrame {
         pack();
     }
 }
+
