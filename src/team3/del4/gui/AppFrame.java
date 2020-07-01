@@ -12,6 +12,7 @@ public class AppFrame extends JFrame {
     private final JButton getTeamStatsBtn;
     private final JButton getPlayerStatsBtn;
     private final JButton addPlayerBtn;
+    private final JButton addKicksBtn;
 
     public AppFrame() {
         setTitle("Team 3 NFL Stats DB");
@@ -31,13 +32,20 @@ public class AppFrame extends JFrame {
         getPlayerStatsBtn = new JButton("Get Player Statistics");
         menuPanel.add(getPlayerStatsBtn);
         addPlayerBtn = new JButton("Add player");
+        addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "AddPlayer"));
         menuPanel.add(addPlayerBtn);
+        addKicksBtn = new JButton("Add Kicking Stats");
+        addKicksBtn.addActionListener((e) -> layout.show(cardPanel, "AddKickStats"));
+        menuPanel.add(addKicksBtn, "AddKickStats");
 
         cardPanel.add(menuPanel, "MainMenu");
 
         // create team stats query panel
-        JPanel getTeamStats = new TeamStatsCard();
-        cardPanel.add(getTeamStats, "GetTeamStats");
+        cardPanel.add(new TeamStatsCard(), "GetTeamStats");
+        // panel to add a player
+        cardPanel.add(new PlayerInsertCard(), "AddPlayer");
+        // panel to add kicking stats
+        cardPanel.add(new AddKickStatsCard(), "AddKickStats");
 
         // persistent button to return to main menu
         returnPanel = new JPanel();

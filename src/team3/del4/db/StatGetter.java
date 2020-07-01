@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatGetter extends DBHandler {
+public class StatGetter extends DBConnector {
     public StatGetter() {
         super();
     }
@@ -20,13 +20,27 @@ public class StatGetter extends DBHandler {
     }
 
     /**
-     * Get the teams in a given division. If {@code div=null} then gets all teams.
+     * Get the teams in a given division. If {@code div==null} then gets all teams.
      */
     public List<String> getTeams(String div) {
         StringBuilder sb = new StringBuilder("select team_name from team");
         if (div != null) {
             sb.append(" where division='");
             sb.append(div);
+            sb.append("'");
+        }
+        sb.append(";");
+        return getStringList(sb.toString());
+    }
+
+    /**
+     * Get the names of players on the given team. if {@code team==null} then gets all player names.
+     */
+    public List<String> getPlayers(String team) {
+        StringBuilder sb = new StringBuilder("select name from player");
+        if (team != null) {
+            sb.append(" where team='");
+            sb.append(team);
             sb.append("'");
         }
         sb.append(";");

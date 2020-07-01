@@ -1,21 +1,16 @@
 package team3.del4.db;
 
-import team3.del4.gui.App;
-
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
-public class DBHandler {
+public class DBConnector {
     static final Properties dbProps = new Properties();
 
     static {
         // load connection info
         try {
-            dbProps.load(DBHandler.class.getClassLoader().getResourceAsStream("resources/db.properties"));
+            dbProps.load(DBConnector.class.getClassLoader().getResourceAsStream("resources/db.properties"));
         } catch (Exception ex) {
             String message = "FATAL: Failed to load db.properties; can't connect to database.";
             ex.printStackTrace(System.err);
@@ -35,7 +30,7 @@ public class DBHandler {
     }
 
     // prevent direct instantiation of this class
-    protected DBHandler() {}
+    protected DBConnector() {}
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(dbProps.getProperty("dbUrl"), dbProps);
@@ -43,5 +38,9 @@ public class DBHandler {
 
     public Statement getStatement() throws SQLException {
         return getConnection().createStatement();
+    }
+
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        return getConnection().prepareStatement(sql);
     }
 }
