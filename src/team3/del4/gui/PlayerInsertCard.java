@@ -113,7 +113,7 @@ public class PlayerInsertCard extends JPanel {
                 // String d = (String) dbox.getSource();
                 //dob = Integer.parseInt(dobox.getText());
                 dob = dobox.getText();
-                height = Integer.parseInt(ht.getText());
+                height = ht.getText();
                 weight = Integer.parseInt(wt.getText());
                 experience = Integer.parseInt(exp.getText());
                 games = Integer.parseInt(gP.getText());
@@ -137,7 +137,7 @@ public class PlayerInsertCard extends JPanel {
         mpan.add(update, BorderLayout.SOUTH);
     }
 
-    public void createPlayer(String p, String pos, String t, String d, int h, int w, int e, int g, int j) {
+    public void createPlayer(String p, String pos, String t, String d, String h, int w, int e, int g, int j) {
         System.out.print("This is the new player : " + p + " -Pos: " + pos
                 + "--team: " + t + " --ht: " + h + " --wt: " + w + " -experience: " + e
                 + " -games_played" + g + " -Jersey_num: " + j);
