@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class PlayerInserter extends DBConnector {
     public boolean insertPlayer(String name, String pos, String team, String dob,
-                                int ht, int wt, int exp, int games, int num) {
+                                String ht, int wt, int exp, int games, int num) {
         // assuming all parameters are valid...
 
         // try-with-resources
@@ -15,7 +15,7 @@ public class PlayerInserter extends DBConnector {
             stmt.setString(2, pos);
             stmt.setString(3, team);
             stmt.setString(4, dob);
-            stmt.setInt(5, ht);
+            stmt.setString(5, ht);
             stmt.setInt(6, wt);
             stmt.setInt(7, exp);
             stmt.setInt(8, games);
