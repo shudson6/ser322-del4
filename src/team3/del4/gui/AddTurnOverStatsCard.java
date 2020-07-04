@@ -5,17 +5,21 @@
  */
 package group3_del4;
 
+/**
+ *
+ * @author Socce
+ */
 import java.awt.*;
 import db.StatUpdate;
 import javax.swing.*;
 
-public class AddKickStatsCard extends JPanel {
+public class AddTurnOverStatsCard extends JPanel {
 
-    private String name = "";
-    private int att = 0;
-    private int com = 0;
+    private String name;
+    private int fum;
+    private int inter;
 
-    public AddKickStatsCard() {
+    public AddTurnOverStatsCard() {
         run();
     }
 
@@ -26,13 +30,10 @@ public class AddKickStatsCard extends JPanel {
         JPanel center = new JPanel();
         center.setLayout(new GridLayout(2, 3, 5, 5));
         JLabel l1 = new JLabel("Player");
-        JLabel l2 = new JLabel("FG_Att");
-        JLabel l3 = new JLabel("Field_Goals");
+        JLabel l2 = new JLabel("Fumbles");
+        JLabel l3 = new JLabel("Interceptions");
         JTextField pname = new JTextField(10);
-        // String name = "";
-
         JTextField atts = new JTextField(10);
-        //String rusha = "";
         JTextField comps = new JTextField(10);
         center.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         center.add(l1);
@@ -48,10 +49,10 @@ public class AddKickStatsCard extends JPanel {
         insert.addActionListener(e -> {
             name = pname.getText();
             try {
-                att = Integer.parseInt(atts.getText());
-                com = Integer.parseInt(comps.getText());
+                fum = Integer.parseInt(atts.getText());
+                inter = Integer.parseInt(comps.getText());
 
-                createStat(name, att, com);
+                createStat(name, fum, inter);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
@@ -60,32 +61,33 @@ public class AddKickStatsCard extends JPanel {
         update.addActionListener(e -> {
             name = pname.getText();
             try {
-                att = Integer.parseInt(atts.getText());
-                com = Integer.parseInt(comps.getText());
+                fum = Integer.parseInt(atts.getText());
+                inter = Integer.parseInt(comps.getText());
 
-                updateStat(name, att, com);
+                updateStat(name, fum, inter);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
         mpan.add(insert, BorderLayout.SOUTH);
         mpan.add(update, BorderLayout.SOUTH);
+
     }
 
-    public void updateStat(String p, int a, int c) {
+    public void createStat(String p, int f, int i) {
 
-        if (new StatUpdate().updateKickStat(p, a, c)) {
-            JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
+        if (new StatUpdate().createTOStat(p, f, i)) {
+            JOptionPane.showMessageDialog(this, "Player stats successfully created");
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void createStat(String p, int a, int c) {
-        if (new StatUpdate().createKickStat(p, a, c)) {
-            JOptionPane.showMessageDialog(this, "Player stats successfully created");
+    public void updateStat(String p, int f, int i) {
+        if (new StatUpdate().updateTOStat(p, f, i)) {
+            JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

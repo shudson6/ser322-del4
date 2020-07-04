@@ -1,9 +1,15 @@
-package team3.del4.gui;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package group3_del4;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class AppFrame extends JFrame {
+
     private final JPanel returnPanel;
     private final JButton returnButton;
     private final JPanel cardPanel;
@@ -13,6 +19,10 @@ public class AppFrame extends JFrame {
     private final JButton getPlayerStatsBtn;
     private final JButton addPlayerBtn;
     private final JButton addKicksBtn;
+    private final JButton addPassBtn;
+    private final JButton addRecBtn;
+    private final JButton addRushBtn;
+    private final JButton addTOBtn;
 
     public AppFrame() {
         setTitle("Team 3 NFL Stats DB");
@@ -25,19 +35,40 @@ public class AppFrame extends JFrame {
 
         // create main menu
         menuPanel = new JPanel();
+
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         getTeamStatsBtn = new JButton("Get Team Statistics");
         getTeamStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetTeamStats"));
+
         menuPanel.add(getTeamStatsBtn);
         getPlayerStatsBtn = new JButton("Get Player Statistics");
         getPlayerStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayerStats"));
+
         menuPanel.add(getPlayerStatsBtn);
         addPlayerBtn = new JButton("Add player");
         addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "AddPlayer"));
+
         menuPanel.add(addPlayerBtn);
+
+        addPassBtn = new JButton("Add Passing Stats");
+        addPassBtn.addActionListener((e) -> layout.show(cardPanel, "AddPassStats"));
+        menuPanel.add(addPassBtn, "AddPassStats");
+
+        addRecBtn = new JButton("Add Reception Stats");
+        addRecBtn.addActionListener((e) -> layout.show(cardPanel, "AddRecStats"));
+        menuPanel.add(addRecBtn, "AddRecStats");
+
+        addRushBtn = new JButton("Add Rushing Stats");
+        addRushBtn.addActionListener((e) -> layout.show(cardPanel, "AddRushStats"));
+        menuPanel.add(addRushBtn, "AddRushStats");
+
         addKicksBtn = new JButton("Add Kicking Stats");
         addKicksBtn.addActionListener((e) -> layout.show(cardPanel, "AddKickStats"));
         menuPanel.add(addKicksBtn, "AddKickStats");
+
+        addTOBtn = new JButton("Add Turnover Stats");
+        addTOBtn.addActionListener((e) -> layout.show(cardPanel, "AddTOStats"));
+        menuPanel.add(addTOBtn, "AddTOStats");
 
         cardPanel.add(menuPanel, "MainMenu");
 
@@ -47,6 +78,14 @@ public class AppFrame extends JFrame {
         cardPanel.add(new PlayerStatsCard(), "GetPlayerStats");
         // panel to add a player
         cardPanel.add(new PlayerInsertCard(), "AddPlayer");
+        // panel to add passing stats
+        cardPanel.add(new AddPassStatsCard(), "AddPassStats");
+        //panel to add turnover stats
+        cardPanel.add(new AddTurnOverStatsCard(), "AddTOStats");
+        //panel to add rush stats
+        cardPanel.add(new AddRushStatsCard(), "AddRushStats");
+        //panel to add rec stats
+        cardPanel.add(new AddRecStatsCard(), "AddRecStats");
         // panel to add kicking stats
         cardPanel.add(new AddKickStatsCard(), "AddKickStats");
 
@@ -65,4 +104,3 @@ public class AppFrame extends JFrame {
         pack();
     }
 }
-
