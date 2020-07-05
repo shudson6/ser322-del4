@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package group3_del4;
+package team3.del4.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +15,7 @@ public class AppFrame extends JFrame {
     private final JPanel cardPanel;
     private final CardLayout layout;
     private final JPanel menuPanel;
+    private final JButton viewPlayersBtn;
     private final JButton getTeamStatsBtn;
     private final JButton getPlayerStatsBtn;
     private final JButton addPlayerBtn;
@@ -37,6 +38,11 @@ public class AppFrame extends JFrame {
         menuPanel = new JPanel();
 
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+
+        viewPlayersBtn = new JButton("Get Players");
+        viewPlayersBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayers"));
+        menuPanel.add(viewPlayersBtn);
+
         getTeamStatsBtn = new JButton("Get Team Statistics");
         getTeamStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetTeamStats"));
 
@@ -72,6 +78,7 @@ public class AppFrame extends JFrame {
 
         cardPanel.add(menuPanel, "MainMenu");
 
+        cardPanel.add(new ViewPlayersCard(), "GetPlayers");
         // create team stats query panel
         cardPanel.add(new TeamStatsCard(), "GetTeamStats");
         // panel to get player stats
@@ -104,3 +111,4 @@ public class AppFrame extends JFrame {
         pack();
     }
 }
+
