@@ -40,7 +40,7 @@ public class StatGetter extends DBConnector {
      * Get the names of players on the given team. if {@code team==null} then gets all player names.
      */
     public List<String> getPlayers(String pos, String team) {
-        StringBuilder sb = new StringBuilder("select * from player");
+        StringBuilder sb = new StringBuilder("select name, position, team from player");
         if (team != null && pos == null) {
             sb.append(" where team='");
             sb.append(team);
@@ -85,12 +85,6 @@ public class StatGetter extends DBConnector {
                 list.add(rs.getString(1));
                 list.add(rs.getString(2));
                 list.add(rs.getString(3));
-                list.add(rs.getString(4));
-                list.add(rs.getString(5));
-                list.add(rs.getString(6));
-                list.add(rs.getString(7));
-                list.add(rs.getString(8));
-                list.add(rs.getString(9));
             }
             return list;
         } catch (SQLException e){
