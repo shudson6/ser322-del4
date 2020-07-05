@@ -22,6 +22,18 @@ public class StatGetter extends DBConnector {
     public List<String> getAllTeams(){
         return getStringList("select team_name from team;");
     }
+
+    public List<String> getAllPlayersInTeam(String team) {
+        StringBuilder sb = new StringBuilder("select name from player");
+        if (team != null){
+            sb.append(" where team='");
+            sb.append(team);
+            sb.append("'");
+        }
+        sb.append(";");
+        return getStringList(sb.toString());
+    }
+
     /**
      * Get the teams in a given division. If {@code div==null} then gets all teams.
      */
@@ -92,4 +104,6 @@ public class StatGetter extends DBConnector {
             return List.of();
         }
     }
+
+
 }
