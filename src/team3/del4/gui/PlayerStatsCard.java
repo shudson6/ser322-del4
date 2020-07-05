@@ -42,13 +42,15 @@ public class PlayerStatsCard extends JPanel{
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
 
-        String[] colName = new String[]{"Name", "Position", "Team", "DOB", "Height", "Weight", "Experience", "Games Played", "Jersey Number"};
+        String[] colName = new String[]{"Name", "Position", "Team"};
         tableModel.setColumnIdentifiers(colName);
         tableModel.setRowCount(0);
 
         TableColumn tableColumn = table.getColumnModel().getColumn(0);
-        tableColumn.setPreferredWidth(400);
+        tableColumn.setPreferredWidth(300);
         tableColumn = table.getColumnModel().getColumn(1);
+        tableColumn.setPreferredWidth(200);
+        tableColumn = table.getColumnModel().getColumn(2);
         tableColumn.setPreferredWidth(200);
 
         goBtn = new JButton("Search");
@@ -71,8 +73,8 @@ public class PlayerStatsCard extends JPanel{
             String[] data = new String[9];
 
             int k = 0;
-            for (int i=0; i<result.size()/9; i++){
-                for (int j=0; j<9; j++){
+            for (int i=0; i<result.size()/3; i++){
+                for (int j=0; j<3; j++){
                     data[j] = result.get(k);
                     k++;
                 }
