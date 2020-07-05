@@ -9,6 +9,7 @@ package group3_del4;
  *
  * @author Socce
  */
+import db.StatGetter;
 import java.awt.*;
 import javax.swing.*;
 import db.StatUpdate;
@@ -19,6 +20,7 @@ public class AddRushStatsCard extends JPanel {
     private int att;
     private int yd;
     private int td;
+    private JComboBox pname;
 
     public AddRushStatsCard() {
         run();
@@ -31,10 +33,12 @@ public class AddRushStatsCard extends JPanel {
         JPanel center = new JPanel();
         center.setLayout(new GridLayout(2, 4, 5, 5));
         JLabel l1 = new JLabel("Player");
+
         JLabel l2 = new JLabel("Rush_Att");
         JLabel l3 = new JLabel("Rush_Yds");
         JLabel l4 = new JLabel("Rush_Tds");
-        JTextField pname = new JTextField(10);
+        pname = new JComboBox<>(new StatGetter().getRushNames().toArray(new String[0]));
+        pname.addActionListener((e) -> pname.getSelectedItem());
         JTextField atts = new JTextField(10);
         JTextField yds = new JTextField(10);
         JTextField tds = new JTextField(10);
@@ -48,10 +52,11 @@ public class AddRushStatsCard extends JPanel {
         center.add(yds);
         center.add(tds);
         mpan.add(center, BorderLayout.CENTER);
-        JButton insert = new JButton("Create");
-        insert.addActionListener(e -> {
-            name = pname.getText();
+        JButton create = new JButton("Create");
+        create.addActionListener(e -> {
+            ///name = pname.getText();
             try {
+                name = (String) pname.getSelectedItem();
                 att = Integer.parseInt(atts.getText());
                 yd = Integer.parseInt(yds.getText());
                 td = Integer.parseInt(tds.getText());
@@ -62,19 +67,29 @@ public class AddRushStatsCard extends JPanel {
         });
         JButton update = new JButton("Update");
         update.addActionListener(e -> {
-            name = pname.getText();
             try {
+                name = (String) pname.getSelectedItem();
                 att = Integer.parseInt(atts.getText());
                 yd = Integer.parseInt(yds.getText());
                 td = Integer.parseInt(tds.getText());
-                createStat(name, att, yd, td);
+                updateStat(name, att, yd, td);
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Failed to add stat", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
+        JButton delete = new JButton("Delete");
+        delete.addActionListener(e -> {
+            name = (String) pname.getSelectedItem();
+            if (new StatUpdate().deleteStat("RUSHING_STATISTICS", name)) {
+                JOptionPane.showMessageDialog(this, "Player stat deleted.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete stat", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            }
 
-        mpan.add(insert, BorderLayout.SOUTH);
+        });
+
         mpan.add(update, BorderLayout.SOUTH);
+        mpan.add(delete, BorderLayout.SOUTH);
 
     }
 
@@ -82,7 +97,7 @@ public class AddRushStatsCard extends JPanel {
         if (new StatUpdate().createRushStat(p, r, ry, rt)) {
             JOptionPane.showMessageDialog(this, "Player stats successfully created.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to create stat", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

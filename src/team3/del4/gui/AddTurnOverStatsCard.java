@@ -9,6 +9,7 @@ package group3_del4;
  *
  * @author Socce
  */
+import db.StatGetter;
 import java.awt.*;
 import db.StatUpdate;
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class AddTurnOverStatsCard extends JPanel {
     private String name;
     private int fum;
     private int inter;
+    private JComboBox<String> pname;
 
     public AddTurnOverStatsCard() {
         run();
@@ -32,7 +34,11 @@ public class AddTurnOverStatsCard extends JPanel {
         JLabel l1 = new JLabel("Player");
         JLabel l2 = new JLabel("Fumbles");
         JLabel l3 = new JLabel("Interceptions");
-        JTextField pname = new JTextField(10);
+        //JTextField pname = new JTextField(10);
+        //JComboBox<String>
+        pname = new JComboBox<>(new StatGetter().getTONames().toArray(new String[0]));
+
+        pname.addActionListener((e) -> pname.getSelectedItem());
         JTextField atts = new JTextField(10);
         JTextField comps = new JTextField(10);
         center.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -45,9 +51,9 @@ public class AddTurnOverStatsCard extends JPanel {
         center.add(comps);
 
         mpan.add(center, BorderLayout.CENTER);
-        JButton insert = new JButton("Create");
-        insert.addActionListener(e -> {
-            name = pname.getText();
+        JButton create = new JButton("Create");
+        create.addActionListener(e -> {
+            //name = pname.getText();
             try {
                 fum = Integer.parseInt(atts.getText());
                 inter = Integer.parseInt(comps.getText());
@@ -59,8 +65,9 @@ public class AddTurnOverStatsCard extends JPanel {
         });
         JButton update = new JButton("Update");
         update.addActionListener(e -> {
-            name = pname.getText();
+
             try {
+                name = (String) pname.getSelectedItem();
                 fum = Integer.parseInt(atts.getText());
                 inter = Integer.parseInt(comps.getText());
 
@@ -69,8 +76,17 @@ public class AddTurnOverStatsCard extends JPanel {
                 JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
-        mpan.add(insert, BorderLayout.SOUTH);
+        JButton delete = new JButton("Delete");
+        delete.addActionListener(e -> {
+            name = (String) pname.getSelectedItem();
+            if (new StatUpdate().deleteStat("TURNOVER_STATISTICS", name)) {
+                JOptionPane.showMessageDialog(this, "Players stats deleted.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         mpan.add(update, BorderLayout.SOUTH);
+        mpan.add(delete, BorderLayout.SOUTH);
 
     }
 
