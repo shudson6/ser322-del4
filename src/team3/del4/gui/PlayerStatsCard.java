@@ -21,6 +21,7 @@ public class PlayerStatsCard extends JPanel{
     private JButton goBtn;
 
     public PlayerStatsCard(){
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -34,6 +35,106 @@ public class PlayerStatsCard extends JPanel{
         playerCB = new JComboBox(createPlayerCBM(players));
 
         goBtn = new JButton(("Search"));
+        goBtn.addActionListener(e -> {
+            String position = (String) positionCB.getSelectedItem();
+            String name = (String) playerCB.getSelectedItem();
+            if (position.equals("QB")){
+                List<String> list = sg.getPassingStats(name);
+                Object[] stats = {
+                        "Name: " + list.get(0),
+                        "Position: " + list.get(1),
+                        "Team: " + list.get(2),
+                        "DOB: " + list.get(3),
+                        "Height: " + list.get(4),
+                        "Weight: " + list.get(5),
+                        "Experience: " + list.get(6),
+                        "Games Played: " + list.get(7),
+                        "Jersey Number: " + list.get(8),
+                        "Pass Attempts: " + list.get(9),
+                        "Pass Completions: " + list.get(10),
+                        "Passing Yards: " + list.get(11),
+                        "Passing TDs: " + list.get(12),
+                        "Fumbles: " + list.get(13),
+                        "Interceptions: " + list.get(14)
+                };
+                JOptionPane.showConfirmDialog(null, stats, "Stats for " + list.get(0), JOptionPane.DEFAULT_OPTION);
+            }
+            if (position.equals("RB")){
+                List<String> list = sg.getRushingStats(name);
+                Object[] stats = {
+                        "Name: " + list.get(0),
+                        "Position: " + list.get(1),
+                        "Team: " + list.get(2),
+                        "DOB: " + list.get(3),
+                        "Height: " + list.get(4),
+                        "Weight: " + list.get(5),
+                        "Experience: " + list.get(6),
+                        "Games Played: " + list.get(7),
+                        "Jersey Number: " + list.get(8),
+                        "Rushing Attempts: " + list.get(9),
+                        "Rushing Yards: " + list.get(10),
+                        "Rushing TDs: " + list.get(11),
+                        "Fumbles: " + list.get(12),
+                        "Interceptions: " + list.get(13)
+                };
+                JOptionPane.showConfirmDialog(null, stats, "Stats for " + list.get(0), JOptionPane.DEFAULT_OPTION);
+            }
+            if (position.equals("WR")){
+                List<String> list = sg.getReceivingStats(name);
+                Object[] stats = {
+                        "Name: " + list.get(0),
+                        "Position: " + list.get(1),
+                        "Team: " + list.get(2),
+                        "DOB: " + list.get(3),
+                        "Height: " + list.get(4),
+                        "Weight: " + list.get(5),
+                        "Experience: " + list.get(6),
+                        "Games Played: " + list.get(7),
+                        "Jersey Number: " + list.get(8),
+                        "Receptions: " + list.get(9),
+                        "Receiving Yards: " + list.get(10),
+                        "Receiving TDs: " + list.get(11),
+                };
+                JOptionPane.showConfirmDialog(null, stats, "Stats for " + list.get(0), JOptionPane.DEFAULT_OPTION);
+
+
+            }
+            if (position.equals("TE")){
+                List<String> list = sg.getReceivingStats(name);
+                Object[] stats = {
+                        "Name: " + list.get(0),
+                        "Position: " + list.get(1),
+                        "Team: " + list.get(2),
+                        "DOB: " + list.get(3),
+                        "Height: " + list.get(4),
+                        "Weight: " + list.get(5),
+                        "Experience: " + list.get(6),
+                        "Games Played: " + list.get(7),
+                        "Jersey Number: " + list.get(8),
+                        "Receptions: " + list.get(9),
+                        "Receiving Yards: " + list.get(10),
+                        "Receiving TDs: " + list.get(11),
+                };
+                JOptionPane.showConfirmDialog(null, stats, "Stats for " + list.get(0), JOptionPane.DEFAULT_OPTION);
+            }
+            if (position.equals("K")){
+                List<String> list = sg.getKickingStats(name);
+                Object[] stats = {
+                        "Name: " + list.get(0),
+                        "Position: " + list.get(1),
+                        "Team: " + list.get(2),
+                        "DOB: " + list.get(3),
+                        "Height: " + list.get(4),
+                        "Weight: " + list.get(5),
+                        "Experience: " + list.get(6),
+                        "Games Played: " + list.get(7),
+                        "Jersey Number: " + list.get(8),
+                        "Field Goal Attempts: " + list.get(9),
+                        "Field Goals Made: " + list.get(10),
+                };
+                JOptionPane.showConfirmDialog(null, stats, "Stats for " + list.get(0), JOptionPane.DEFAULT_OPTION);
+            }
+        });
 
         gbc.gridx = 0;
         gbc.gridy = 0;
