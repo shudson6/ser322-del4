@@ -139,4 +139,128 @@ public class StatGetter extends DBConnector {
         }
     }
 
+    private List<String> getStringListPassing(String query) {
+        try (Statement s = getStatement()) {
+            ResultSet rs = s.executeQuery(query);
+            ArrayList<String> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                list.add(rs.getString(2));
+                list.add(rs.getString(3));
+                list.add(rs.getString(4));
+                list.add(rs.getString(5));
+                list.add(rs.getString(6));
+                list.add(rs.getString(7));
+                list.add(rs.getString(8));
+                list.add(rs.getString(9));
+                list.add(rs.getString(10));
+                list.add(rs.getString(11));
+                list.add(rs.getString(12));
+                list.add(rs.getString(13));
+                list.add(rs.getString(14));
+                list.add(rs.getString(15));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return List.of();
+        }
+    }
+
+    private List<String> getStringListRushing(String query) {
+        try (Statement s = getStatement()) {
+            ResultSet rs = s.executeQuery(query);
+            ArrayList<String> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                list.add(rs.getString(2));
+                list.add(rs.getString(3));
+                list.add(rs.getString(4));
+                list.add(rs.getString(5));
+                list.add(rs.getString(6));
+                list.add(rs.getString(7));
+                list.add(rs.getString(8));
+                list.add(rs.getString(9));
+                list.add(rs.getString(10));
+                list.add(rs.getString(11));
+                list.add(rs.getString(12));
+                list.add(rs.getString(13));
+                list.add(rs.getString(14));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return List.of();
+        }
+    }
+
+    private List<String> getStringListReceiving(String query) {
+        try (Statement s = getStatement()) {
+            ResultSet rs = s.executeQuery(query);
+            ArrayList<String> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                list.add(rs.getString(2));
+                list.add(rs.getString(3));
+                list.add(rs.getString(4));
+                list.add(rs.getString(5));
+                list.add(rs.getString(6));
+                list.add(rs.getString(7));
+                list.add(rs.getString(8));
+                list.add(rs.getString(9));
+                list.add(rs.getString(10));
+                list.add(rs.getString(11));
+                list.add(rs.getString(12));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return List.of();
+        }
+    }
+
+    private List<String> getStringListKicking(String query) {
+        try (Statement s = getStatement()) {
+            ResultSet rs = s.executeQuery(query);
+            ArrayList<String> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                list.add(rs.getString(2));
+                list.add(rs.getString(3));
+                list.add(rs.getString(4));
+                list.add(rs.getString(5));
+                list.add(rs.getString(6));
+                list.add(rs.getString(7));
+                list.add(rs.getString(8));
+                list.add(rs.getString(9));
+                list.add(rs.getString(10));
+                list.add(rs.getString(11));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return List.of();
+        }
+    }
+
+    public List<String> getPassingStats(String name) {
+        return getStringListPassing("SELECT name, Position, team, dob, height, weight, experience, games_played, jersey_num, pass_att, pass_comp, pass_yds, pass_td, fumbles, interceptions FROM PLAYER, PASSING_STATISTICS as s, Turnover_statistics as t " +
+                "where '" + name + "' = name and '" + name + "' = s.player_name and '" + name + "' = t.player_name;");
+    }
+
+    public List<String> getRushingStats(String name) {
+        return getStringListRushing("SELECT name, Position, team, dob, height, weight, experience, games_played, jersey_num, rush_att, rush_yds, rush_td, fumbles, interceptions FROM PLAYER, Rushing_STATISTICS as s, Turnover_statistics as t " +
+                "where '" + name + "' = name and '" + name + "' = s.player_name and '" + name + "' = t.player_name;");
+    }
+
+    public List<String> getReceivingStats(String name) {
+        return getStringListReceiving("SELECT name, Position, team, dob, height, weight, experience, games_played, jersey_num, receptions, rec_yds, rec_td FROM PLAYER, Receiving_STATISTICS as s " +
+                "where '" + name + "' = name and '" + name + "' = s.player_name;");
+    }
+
+    public List<String> getKickingStats(String name) {
+        return getStringListKicking("SELECT name, Position, team, dob, height, weight, experience, games_played, jersey_num, fg_att, field_goals FROM PLAYER, Kicking_STATISTICS as s " +
+                "where '" + name + "' = name and '" + name + "' = s.player_name;");
+    }
+
 }
