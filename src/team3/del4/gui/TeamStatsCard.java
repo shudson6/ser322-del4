@@ -27,7 +27,17 @@ public class TeamStatsCard extends JPanel {
         teamCB = new JComboBox(createTeamCBM(teams));
 
         // go button: launches the query
-        goBtn = new JButton("Query");
+        goBtn = new JButton("Search");
+        goBtn.addActionListener(e -> {
+            String team = (String) teamCB.getSelectedItem();
+            List<String> list = sg.getTeamStats(team);
+            Object[] stats = {
+                    "Name: " + list.get(2) + " " + list.get(0),
+                    "Division: " + list.get(1),
+                    "Record: " + list.get(3) + " - " + list.get(4)
+            };
+            JOptionPane.showConfirmDialog(null, stats, "Stats for " + list.get(2) + " " + list.get(0), JOptionPane.DEFAULT_OPTION);
+        });
 
         // top row: labels
         gbc.gridx = 0;
