@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package db;
+package team3.del4.db;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -77,19 +77,6 @@ public class StatUpdate extends DBConnector {
 
     }
 
-    public boolean deleteRushStat(String name) {
-        try (PreparedStatement stmt = prepareStatement("Delete From RUSHING_STATISTICS Where player_name = (?)")) {
-            stmt.setString(1, name);
-            if (stmt.executeUpdate() > 0) {
-                System.out.println("SUCCESSFUL");
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public boolean createRushStat(String name, int ra, int ry, int rt) {
         try (PreparedStatement stmt = prepareStatement("Insert into RUSHING_STATISTICS(player_name, rush_att, rush_yds, rush_td) values(?,?,?,?)")) {
             //prepared statement takes in parameters.
@@ -130,19 +117,6 @@ public class StatUpdate extends DBConnector {
 
     }
 
-    public boolean deleteStat(String place, String name) {
-        try (PreparedStatement stmt = prepareStatement("Delete From " + place + " Where player_name = '" + name + "'")) {
-
-            if (stmt.executeUpdate() > 0) {
-                System.out.println("SUCCESSFUL");
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public boolean createRecStat(String name, int rec, int ry, int rt) {
         try (PreparedStatement stmt = prepareStatement("Insert into RECEIVING_STATISTICS(player_name, receptions, rec_yds, rec_td) values(?,?,?,?)")) {
             //prepared statement takes in parameters.
@@ -163,7 +137,7 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean updateKickStat(String name, int att, int fg) {
-        try (PreparedStatement stmt = prepareStatement("UPDATE KICKING_STATISTICS SET fg_att = (?), field_goals = (?) Where player_name = (?)")) {
+        try (PreparedStatement stmt = prepareStatement("Update KICKING_STATSTICS SET fg_att = (?), field_goals = (?) Where player_name = (?)")) {
             stmt.setInt(1, att);
             stmt.setInt(2, fg);
             stmt.setString(3, name);
