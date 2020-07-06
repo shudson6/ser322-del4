@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package group3_del4;
+package team3.del4.gui;
 
-import db.StatGetter;
-import db.StatUpdate;
+import team3.del4.db.StatUpdate;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -21,7 +21,6 @@ public class AddPassStatsCard extends JPanel {
     private int com;
     private int yd;
     private int td;
-    private JComboBox<String> pname;
 
     public AddPassStatsCard() {
         run();
@@ -39,8 +38,8 @@ public class AddPassStatsCard extends JPanel {
         JLabel l3 = new JLabel("Pass_Comp");
         JLabel l4 = new JLabel("Pass_Yds");
         JLabel l5 = new JLabel("Pass_Tds");
-        pname = new JComboBox<>(new StatGetter().getPassNames().toArray(new String[0]));
-        pname.addActionListener((e) -> pname.getSelectedItem());
+        JTextField pname = new JTextField(10);
+
         JTextField atts = new JTextField(10);
 
         JTextField comps = new JTextField(10);
@@ -61,9 +60,9 @@ public class AddPassStatsCard extends JPanel {
         center.add(yds);
         center.add(tds);
         mpan.add(center, BorderLayout.CENTER);
-        JButton create = new JButton("Create");
-        create.addActionListener(e -> {
-            // name = pname.getText();
+        JButton insert = new JButton("Create");
+        insert.addActionListener(e -> {
+            name = pname.getText();
             try {
                 att = Integer.parseInt(atts.getText());
                 com = Integer.parseInt(comps.getText());
@@ -75,20 +74,10 @@ public class AddPassStatsCard extends JPanel {
                 JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
-        JButton delete = new JButton("Delete");
-        delete.addActionListener(e -> {
-            name = (String) pname.getSelectedItem();
-            if (new StatUpdate().deleteStat("PASSING_STATISTICS", name)) {
-                JOptionPane.showMessageDialog(this, "Players stats deleted.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
         JButton update = new JButton("Update");
         update.addActionListener(e -> {
+            name = pname.getText();
             try {
-                name = (String) pname.getSelectedItem();
                 att = Integer.parseInt(atts.getText());
                 com = Integer.parseInt(comps.getText());
                 yd = Integer.parseInt(yds.getText());
@@ -99,8 +88,8 @@ public class AddPassStatsCard extends JPanel {
                 JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
+        mpan.add(insert, BorderLayout.SOUTH);
         mpan.add(update, BorderLayout.SOUTH);
-        mpan.add(delete, BorderLayout.SOUTH);
 
     }
 

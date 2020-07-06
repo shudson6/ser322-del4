@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class PlayerStatsCard extends JPanel{
-    private JComboBox teamCB;
+    private JComboBox positionCB;
     private JComboBox playerCB;
     private JButton goBtn;
 
@@ -25,37 +25,60 @@ public class PlayerStatsCard extends JPanel{
         GridBagConstraints gbc = new GridBagConstraints();
 
         StatGetter sg = new StatGetter();
-        List<String> teams = sg.getAllTeams();
-        List<String> players = sg.getAllPlayersInTeam(null);
+        List<String> positions = sg.getPositions();
+        List<String> players = sg.getAllPlayersWithPos(null);
 
-        teamCB = new JComboBox(createTeamCBM(teams));
-        teamCB.addActionListener((e) -> playerCB.setModel(createPlayerCBM(new StatGetter().getAllPlayersInTeam(
-                teamCB.getSelectedItem().equals("Any") ? null : (String) teamCB.getSelectedItem()))));
+        positionCB = new JComboBox(createPosCBM(positions));
+        positionCB.addActionListener((e) -> playerCB.setModel(createPlayerCBM(new StatGetter().getAllPlayersWithPos(
+                (String) positionCB.getSelectedItem()))));
         playerCB = new JComboBox(createPlayerCBM(players));
 
         goBtn = new JButton(("Search"));
+        goBtn.addActionListener(e -> {
+            String position = (String) positionCB.getSelectedItem();
+            String name = (String) playerCB.getSelectedItem();
+
+            if (position.equals("QB")){
+                List<String> list = sg.getPassingStats(name);
+                for (String i:list){
+                    System.out.println(i);
+                }
+            }
+            if (position.equals("RB")){
+                sg.getRushingStats(name);
+            }
+            if (position.equals("WR")){
+                sg.getReceivingStats(name);
+            }
+            if (position.equals("TE")){
+                sg.getReceivingStats(name);
+            }
+            if (position.equals("K")){
+                sg.getKickingStats(name);
+            }
+        });
 
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        add(new JLabel("Team"), gbc);
+        add(new JLabel("Position"), gbc);
         gbc.gridx = 2;
         add(new JLabel("Player"), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(teamCB,gbc);
+        add(positionCB,gbc);
         gbc.gridx = 2;
         add(playerCB, gbc);
 
         gbc.gridx = 4;
+
         gbc.gridwidth = 1;
         add(goBtn, gbc);
     }
 
-    private ComboBoxModel<String> createTeamCBM(List<String> teams) {
-        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>(teams.toArray(new String[0]));
-        cbm.insertElementAt("Any", 0);
+    private ComboBoxModel<String> createPosCBM(List<String> positions) {
+        DefaultComboBoxModel<String> cbm = new DefaultComboBoxModel<>(positions.toArray(new String[0]));
         return cbm;
     }
 

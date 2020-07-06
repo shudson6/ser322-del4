@@ -33,7 +33,7 @@ public class PlayerInsertCard extends JPanel {
     //private static int year;
     //private int dob;
     private String dob;
-    private int height;
+    private String height;
     private int weight;
     private int experience;
     private int games = 0;
