@@ -243,6 +243,24 @@ public class StatGetter extends DBConnector {
         }
     }
 
+    private List<String> getStringListTeam(String query){
+        try (Statement s = getStatement()) {
+            ResultSet rs = s.executeQuery(query);
+            ArrayList<String> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+                list.add(rs.getString(2));
+                list.add(rs.getString(3));
+                list.add(rs.getString(4));
+                list.add(rs.getString(5));
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return List.of();
+        }
+    }
+
     public List<String> getPassingStats(String name) {
         return getStringListPassing("SELECT name, Position, team, dob, height, weight, experience, games_played, jersey_num, pass_att, pass_comp, pass_yds, pass_td, fumbles, interceptions FROM PLAYER, PASSING_STATISTICS as s, Turnover_statistics as t " +
                 "where '" + name + "' = name and '" + name + "' = s.player_name and '" + name + "' = t.player_name;");
@@ -263,4 +281,7 @@ public class StatGetter extends DBConnector {
                 "where '" + name + "' = name and '" + name + "' = s.player_name;");
     }
 
+    public List<String> getTeamStats(String name){
+        return getStringListTeam("SELECT * from team where team_name = '" + name + "';");
+    }
 }
