@@ -5,16 +5,17 @@
  */
 package team3.del4.gui;
 
-import team3.del4.db.StatUpdate;
-
+import team3.del4.db.StatGetter;
 import java.awt.*;
+import team3.del4.db.StatUpdate;
 import javax.swing.*;
 
 public class AddKickStatsCard extends JPanel {
 
-    private String name = "";
-    private int att = 0;
-    private int com = 0;
+    private String name;
+    private int att;
+    private int com;
+    private JComboBox<String> pname;
 
     public AddKickStatsCard() {
         run();
@@ -29,8 +30,9 @@ public class AddKickStatsCard extends JPanel {
         JLabel l1 = new JLabel("Player");
         JLabel l2 = new JLabel("FG_Att");
         JLabel l3 = new JLabel("Field_Goals");
-        JTextField pname = new JTextField(10);
-        // String name = "";
+        pname = new JComboBox<>(new StatGetter().getKickNames().toArray(new String[0]));
+
+        pname.addActionListener((e) -> pname.getSelectedItem());
 
         JTextField atts = new JTextField(10);
         //String rusha = "";
@@ -45,9 +47,9 @@ public class AddKickStatsCard extends JPanel {
         center.add(comps);
 
         mpan.add(center, BorderLayout.CENTER);
-        JButton insert = new JButton("Create");
-        insert.addActionListener(e -> {
-            name = pname.getText();
+        JButton create = new JButton("Create");
+        create.addActionListener(e -> {
+            // name = getText();
             try {
                 att = Integer.parseInt(atts.getText());
                 com = Integer.parseInt(comps.getText());
@@ -59,8 +61,8 @@ public class AddKickStatsCard extends JPanel {
         });
         JButton update = new JButton("Update");
         update.addActionListener(e -> {
-            name = pname.getText();
             try {
+                name = (String) pname.getSelectedItem();
                 att = Integer.parseInt(atts.getText());
                 com = Integer.parseInt(comps.getText());
 
@@ -69,8 +71,17 @@ public class AddKickStatsCard extends JPanel {
                 JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
-        mpan.add(insert, BorderLayout.SOUTH);
+        JButton delete = new JButton("Delete");
+        delete.addActionListener(e -> {
+            name = (String) pname.getSelectedItem();
+            if (new StatUpdate().deleteStat("KICKING_STATISTICS", name)) {
+                JOptionPane.showMessageDialog(this, "Players stats deleted.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         mpan.add(update, BorderLayout.SOUTH);
+        mpan.add(delete, BorderLayout.SOUTH);
     }
 
     public void updateStat(String p, int a, int c) {

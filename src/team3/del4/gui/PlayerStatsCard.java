@@ -26,37 +26,14 @@ public class PlayerStatsCard extends JPanel{
 
         StatGetter sg = new StatGetter();
         List<String> positions = sg.getPositions();
-        List<String> players = sg.getAllPlayersWithPos(null);
+        List<String> players = sg.getPlayersWithPos("K");
 
         positionCB = new JComboBox(createPosCBM(positions));
-        positionCB.addActionListener((e) -> playerCB.setModel(createPlayerCBM(new StatGetter().getAllPlayersWithPos(
+        positionCB.addActionListener((e) -> playerCB.setModel(createPlayerCBM(new StatGetter().getPlayersWithPos(
                 (String) positionCB.getSelectedItem()))));
         playerCB = new JComboBox(createPlayerCBM(players));
 
         goBtn = new JButton(("Search"));
-        goBtn.addActionListener(e -> {
-            String position = (String) positionCB.getSelectedItem();
-            String name = (String) playerCB.getSelectedItem();
-
-            if (position.equals("QB")){
-                List<String> list = sg.getPassingStats(name);
-                for (String i:list){
-                    System.out.println(i);
-                }
-            }
-            if (position.equals("RB")){
-                sg.getRushingStats(name);
-            }
-            if (position.equals("WR")){
-                sg.getReceivingStats(name);
-            }
-            if (position.equals("TE")){
-                sg.getReceivingStats(name);
-            }
-            if (position.equals("K")){
-                sg.getKickingStats(name);
-            }
-        });
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -72,7 +49,6 @@ public class PlayerStatsCard extends JPanel{
         add(playerCB, gbc);
 
         gbc.gridx = 4;
-
         gbc.gridwidth = 1;
         add(goBtn, gbc);
     }
