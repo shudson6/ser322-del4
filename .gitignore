@@ -6,3 +6,6 @@ out/
 
 #vim stuff
 *.*~
+
+#cli-compiled class files
+classes/

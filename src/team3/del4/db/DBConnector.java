@@ -5,9 +5,9 @@ import java.sql.*;
 import java.util.Properties;
 
 public class DBConnector {
-    static final Properties dbProps = new Properties();
+    static Properties dbProps = null;
 
-    static {
+    private static void loadPropsFromResource() {
         // load connection info
         try {
             dbProps.load(DBConnector.class.getClassLoader().getResourceAsStream("resources/db.properties"));
@@ -29,10 +29,17 @@ public class DBConnector {
         }
     }
 
+    public static void setConnectionProperties(Properties dbp) {
+        dbProps = dbp;
+    }
+
     // prevent direct instantiation of this class
     protected DBConnector() {}
 
     public Connection getConnection() throws SQLException {
+        if (dbProps == null) {
+            loadPropsFromResource();
+        }
         return DriverManager.getConnection(dbProps.getProperty("dbUrl"), dbProps);
     }
 
