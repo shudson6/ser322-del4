@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package team3.del4.gui;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +24,7 @@ public class AppFrame extends JFrame {
     private final JButton addRecBtn;
     private final JButton addRushBtn;
     private final JButton addTOBtn;
+    private final JButton createPlayerBtn;
 
     public AppFrame() {
         setTitle("Team 3 NFL Stats DB");
@@ -51,10 +52,16 @@ public class AppFrame extends JFrame {
         getPlayerStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayerStats"));
 
         menuPanel.add(getPlayerStatsBtn);
-        addPlayerBtn = new JButton("Add player");
-        addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "AddPlayer"));
+        addPlayerBtn = new JButton("Update player");
+        addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "UpdatePlayer"));
 
         menuPanel.add(addPlayerBtn);
+
+        menuPanel.add(getPlayerStatsBtn);
+        createPlayerBtn = new JButton("Create player");
+        createPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "CreatePlayer"));
+
+        menuPanel.add(createPlayerBtn);
 
         addPassBtn = new JButton("Add Passing Stats");
         addPassBtn.addActionListener((e) -> layout.show(cardPanel, "AddPassStats"));
@@ -83,9 +90,12 @@ public class AppFrame extends JFrame {
         cardPanel.add(new TeamStatsCard(), "GetTeamStats");
         // panel to get player stats
         cardPanel.add(new PlayerStatsCard(), "GetPlayerStats");
+        // panel to add create new player
+
+        cardPanel.add(new CreatePlayerCard(), "CreatePlayer");
         // panel to add a player
-        cardPanel.add(new PlayerInsertCard(), "AddPlayer");
-        // panel to add passing stats
+        cardPanel.add(new PlayerInsertCard(), "UpdatePlayer");
+        //panel to add pass stats
         cardPanel.add(new AddPassStatsCard(), "AddPassStats");
         //panel to add turnover stats
         cardPanel.add(new AddTurnOverStatsCard(), "AddTOStats");
@@ -111,4 +121,3 @@ public class AppFrame extends JFrame {
         pack();
     }
 }
-

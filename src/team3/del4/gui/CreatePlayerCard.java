@@ -5,14 +5,18 @@
  */
 package gui;
 
-import db.StatGetter;
+/**
+ *
+ * @author Socce
+ */
 import db.StatUpdate;
+import db.StatGetter;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-public class PlayerInsertCard extends JPanel {
+public class CreatePlayerCard extends JPanel {
 
     private String name;
     private String dob;
@@ -21,9 +25,8 @@ public class PlayerInsertCard extends JPanel {
     private int experience;
     private int games;
     private int jnum;
-    private JComboBox pname;
 
-    public PlayerInsertCard() {
+    public CreatePlayerCard() {
         run();
     }
 
@@ -44,8 +47,8 @@ public class PlayerInsertCard extends JPanel {
         JLabel l7 = new JLabel("Experience");
         JLabel l8 = new JLabel("Games_Played");
         JLabel l9 = new JLabel("Jersey_Num");
-        pname = new JComboBox<>(new StatGetter().getAllPlayers().toArray(new String[0]));
-        pname.addActionListener((e) -> pname.getSelectedItem());
+        JTextField pname = new JTextField(10);
+
         JComboBox<String> pbox = new JComboBox<>(new StatGetter().getPositions().toArray(new String[0]));
         JComboBox<String> tbox = new JComboBox<>(new StatGetter().getTeams(null).toArray(new String[0]));
 
@@ -83,10 +86,10 @@ public class PlayerInsertCard extends JPanel {
         center.add(gP);
         center.add(jN);
         mpan.add(center, BorderLayout.CENTER);
-        JButton update = new JButton("Update");
-        update.addActionListener(e -> {
+        JButton create = new JButton("Create");
+        create.addActionListener(e -> {
             try {
-                name = (String) pname.getSelectedItem();
+                name = pname.getText();
                 String p = (String) pbox.getSelectedItem();
                 String t = (String) tbox.getSelectedItem();
                 dob = dobox.getText();
@@ -98,26 +101,17 @@ public class PlayerInsertCard extends JPanel {
                 createPlayer(name, p, t, dob, height, weight, experience, games, jnum);
 
             } catch (NumberFormatException ex) {
-                System.out.println("Your supposed to enter numbers.");
+                JOptionPane.showMessageDialog(this, "Failed to create player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
             }
         });
-        JButton delete = new JButton("Delete");
-        delete.addActionListener(e -> {
-            name = (String) pname.getSelectedItem();
-            if (new StatUpdate().deletePlayer(name)) {
-                JOptionPane.showMessageDialog(this, "Player successfully deleted.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete player", "SQL Error", JOptionPane.ERROR_MESSAGE);
-            }
 
-        });
-        mpan.add(update, BorderLayout.SOUTH);
-        mpan.add(delete, BorderLayout.SOUTH);
+        mpan.add(create, BorderLayout.SOUTH);
     }
 
     public void createPlayer(String p, String pos, String t, String d, String h, int w, int e, int g, int j) {
-        if (new StatUpdate().updatePlayerBio(p, pos, t, d, h, w, e, g, j)) {
-            JOptionPane.showMessageDialog(this, "Player update was successful.");
+
+        if (new StatUpdate().insertPlayer(p, pos, t, d, h, w, e, g, j)) {
+            JOptionPane.showMessageDialog(this, "Player added successfully.");
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
