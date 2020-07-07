@@ -24,3 +24,17 @@ in db.properties following the guidline below:
 7. Run App.java.
 
 *** This was used with Java 11
+
+Alternative Execution (Command-Line):
+
+3. From the directory containing the src/ folder, run:
+
+   > javac -d <dest> src/team3/del4/gui/*.java src/team3/del4/db/*.java
+   
+4. Then launch the app with:
+
+   > java team3.del4.gui.App <driver> <url> <user> <password>
+   
+   As usual, this assumes the <dest> folder and location of <driver> are on the classpath.
+   One can also copy src/resources/db.properties to <dest>/resources/db.properties
+   and edit it as in #3 above to avoid providing that info on the command-line.
