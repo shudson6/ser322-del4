@@ -109,6 +109,28 @@ public class StatGetter extends DBConnector {
         return getStringList(sb.toString());
     }
 
+    public List<String> getPlayersView(String pos, String team) {
+        StringBuilder sb = new StringBuilder("select name, position, team from player");
+        if (team != null && pos == null) {
+            sb.append(" where team='");
+            sb.append(team);
+            sb.append("'");
+        } else if (team == null && pos != null) {
+            sb.append(" where position='");
+            sb.append(pos);
+            sb.append("'");
+        } else if (team != null && pos != null) {
+            sb.append(" where team='");
+            sb.append(team);
+            sb.append("'");
+            sb.append(" and position='");
+            sb.append(pos);
+            sb.append("'");
+        }
+        sb.append(";");
+        return getStringListPlayers(sb.toString());
+    }
+
     private List<String> getStringList(String query) {
         try (Statement s = getStatement()) {
             ResultSet rs = s.executeQuery(query);
