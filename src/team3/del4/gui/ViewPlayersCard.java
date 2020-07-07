@@ -66,7 +66,7 @@ public class ViewPlayersCard extends JPanel{
                 team = null;
             }
 
-            List<String> result = sg.getPlayers(pos,team);
+            List<String> result = sg.getPlayersView(pos,team);
 
             tableModel.setRowCount(0);
 

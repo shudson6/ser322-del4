@@ -1,100 +1,96 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package team3.del4.gui;
 
 /**
  *
  * @author Socce
  */
+import team3.del4.db.StatGetter;
 import java.awt.*;
 import javax.swing.*;
 import team3.del4.db.StatUpdate;
 
 public class AddRecStatsCard extends JPanel {
-    private PlayerSelector player;
-    private JTextField attTF;
-    private JTextField ydsTF;
-    private JTextField tdsTF;
-    private JButton update;
-    private JButton delete;
+
+    private String name;
+    private int com;
+    private int yd;
+    private int td;
+    private JComboBox pname;
 
     public AddRecStatsCard() {
-        init();
+        run();
     }
 
-    public void init() {
-        player = new PlayerSelector();
-        attTF = new JTextField(10);
-        ydsTF = new JTextField(10);
-        tdsTF = new JTextField(10);
+    public void run() {
 
-        delete = new JButton("Delete");
-        delete.addActionListener(e -> clickedDelete());
-        update = new JButton("Update");
-        update.addActionListener(e -> clickedUpdate());
+        JPanel mpan = this;
 
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        JPanel center = new JPanel();
+        center.setLayout(new GridLayout(2, 4, 5, 5));
+        JLabel l1 = new JLabel("Player");
+        JLabel l2 = new JLabel("Rec_Atts");
+        JLabel l3 = new JLabel("Rec_Yds");
+        JLabel l4 = new JLabel("Rec_Tds");
+        pname = new JComboBox<>(new StatGetter().getRecNames().toArray(new String[0]));
+        pname.addActionListener((e) -> pname.getSelectedItem());
+        JTextField comp = new JTextField(10);
+        JTextField yds = new JTextField(10);
+        JTextField tds = new JTextField(10);
+        center.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        center.add(l1);
+        center.add(l2);
+        center.add(l3);
+        center.add(l4);
+        center.add(pname);
+        center.add(comp);
+        center.add(yds);
+        center.add(tds);
+        mpan.add(center, BorderLayout.CENTER);
+        JButton delete = new JButton("Delete");
+        delete.addActionListener(e -> {
+            name = (String) pname.getSelectedItem();
+            if (new StatUpdate().deleteStat("RECEIVING_STATISTICS", name)) {
+                JOptionPane.showMessageDialog(this, "Player stat deleted.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        JButton update = new JButton("Update");
+        update.addActionListener(e -> {
+            try {
+                name = (String) pname.getSelectedItem();
+                com = Integer.parseInt(comp.getText());
+                yd = Integer.parseInt(yds.getText());
+                td = Integer.parseInt(tds.getText());
+                updateStat(name, com, yd, td);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
-        gbc.anchor = GridBagConstraints.SOUTH;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 3;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(player, gbc);
+        mpan.add(update, BorderLayout.SOUTH);
+        mpan.add(delete, BorderLayout.SOUTH);
 
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 3;
-        gbc.gridy = 1;
-        add(new JLabel("Att"), gbc);
-        gbc.gridx = 4;
-        add(new JLabel("Yds"), gbc);
-        gbc.gridx = 5;
-        add(new JLabel("TDs"), gbc);
-
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 3;
-        gbc.gridy = 2;
-        add(attTF, gbc);
-        gbc.gridx = 4;
-        add(ydsTF, gbc);
-        gbc.gridx = 5;
-        add(tdsTF, gbc);
-
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 4;
-        gbc.gridy = 3;
-        add(update, gbc);
-        gbc.gridx = 5;
-        add(delete, gbc);
     }
 
-    public void updateStat(String p, int r, int ry, int rt) {
-        StatUpdate sql = new StatUpdate();
-        if (sql.updateRecStat(p, r, ry, rt) || sql.createRecStat(p, r, ry, rt)) {
-            JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Could not insert nor update stat.", "SQL Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void clickedDelete() {
-        String name = player.getSelectedPlayer();
-        if (new StatUpdate().deleteStat("RECEIVING_STATISTICS", name)) {
-            JOptionPane.showMessageDialog(this, "Player stat deleted.");
+    public void createStat(String p, int r, int ry, int rt) {
+        if (new StatUpdate().createRecStat(p, r, ry, rt)) {
+            JOptionPane.showMessageDialog(this, "Player stats successfully created");
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void clickedUpdate() {
-        try {
-            String name = player.getSelectedPlayer();
-            int com = Integer.parseInt(attTF.getText());
-            int yd = Integer.parseInt(ydsTF.getText());
-            int td = Integer.parseInt(tdsTF.getText());
-            updateStat(name, com, yd, td);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
+    public void updateStat(String p, int r, int ry, int rt) {
+        if (new StatUpdate().updateRecStat(p, r, ry, rt)) {
+            JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
