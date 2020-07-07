@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package team3.del4.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,51 +37,60 @@ public class AppFrame extends JFrame {
 
         // create main menu
         menuPanel = new JPanel();
-
-        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
-
         viewPlayersBtn = new JButton("Get Players");
         viewPlayersBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayers"));
-        menuPanel.add(viewPlayersBtn);
-
         getTeamStatsBtn = new JButton("Get Team Statistics");
         getTeamStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetTeamStats"));
-
-        menuPanel.add(getTeamStatsBtn);
         getPlayerStatsBtn = new JButton("Get Player Statistics");
         getPlayerStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayerStats"));
-
-        menuPanel.add(getPlayerStatsBtn);
         addPlayerBtn = new JButton("Update player");
         addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "UpdatePlayer"));
-
-        menuPanel.add(addPlayerBtn);
-
-        menuPanel.add(getPlayerStatsBtn);
         createPlayerBtn = new JButton("Create player");
         createPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "CreatePlayer"));
-
-        menuPanel.add(createPlayerBtn);
-
         addPassBtn = new JButton("Add Passing Stats");
         addPassBtn.addActionListener((e) -> layout.show(cardPanel, "AddPassStats"));
-        menuPanel.add(addPassBtn, "AddPassStats");
-
         addRecBtn = new JButton("Add Reception Stats");
         addRecBtn.addActionListener((e) -> layout.show(cardPanel, "AddRecStats"));
-        menuPanel.add(addRecBtn, "AddRecStats");
-
         addRushBtn = new JButton("Add Rushing Stats");
         addRushBtn.addActionListener((e) -> layout.show(cardPanel, "AddRushStats"));
-        menuPanel.add(addRushBtn, "AddRushStats");
-
         addKicksBtn = new JButton("Add Kicking Stats");
         addKicksBtn.addActionListener((e) -> layout.show(cardPanel, "AddKickStats"));
-        menuPanel.add(addKicksBtn, "AddKickStats");
-
         addTOBtn = new JButton("Add Turnover Stats");
         addTOBtn.addActionListener((e) -> layout.show(cardPanel, "AddTOStats"));
-        menuPanel.add(addTOBtn, "AddTOStats");
+
+        menuPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 5;
+        gbc.ipady = 5;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        menuPanel.add(viewPlayersBtn, gbc);
+        gbc.gridy = 2;
+        menuPanel.add(getPlayerStatsBtn, gbc);
+        gbc.gridy = 3;
+        menuPanel.add(getTeamStatsBtn, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        menuPanel.add(createPlayerBtn, gbc);
+        gbc.gridy = 2;
+        menuPanel.add(addPlayerBtn, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        menuPanel.add(addPassBtn, gbc);
+        gbc.gridy = 1;
+        menuPanel.add(addRecBtn, gbc);
+        gbc.gridy = 2;
+        menuPanel.add(addRushBtn, gbc);
+        gbc.gridy = 3;
+        menuPanel.add(addKicksBtn, gbc);
+        gbc.gridy = 4;
+        menuPanel.add(addTOBtn, gbc);
 
         cardPanel.add(menuPanel, "MainMenu");
 

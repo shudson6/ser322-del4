@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package db;
+package team3.del4.db;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

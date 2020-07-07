@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package team3.del4.gui;
 
-import db.StatGetter;
-import db.StatUpdate;
+import team3.del4.db.StatGetter;
+import team3.del4.db.StatUpdate;
 
 import java.awt.*;
 
