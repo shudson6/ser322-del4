@@ -8,6 +8,7 @@ public class DBConnector {
     static Properties dbProps = null;
 
     private static void loadPropsFromResource() {
+        dbProps = new Properties();
         // load connection info
         try {
             dbProps.load(DBConnector.class.getClassLoader().getResourceAsStream("resources/db.properties"));

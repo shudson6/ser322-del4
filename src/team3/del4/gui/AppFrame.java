@@ -103,7 +103,7 @@ public class AppFrame extends JFrame {
 
         cardPanel.add(new CreatePlayerCard(), "CreatePlayer");
         // panel to add a player
-        cardPanel.add(new PlayerInsertCard(), "UpdatePlayer");
+        cardPanel.add(new PlayerUpdateCard(), "UpdatePlayer");
         //panel to add pass stats
         cardPanel.add(new AddPassStatsCard(), "AddPassStats");
         //panel to add turnover stats
