@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package team3.del4.gui;
 
 /**
@@ -15,95 +10,86 @@ import team3.del4.db.StatUpdate;
 import javax.swing.*;
 
 public class AddTurnOverStatsCard extends JPanel {
-
-    private String name;
-    private int fum;
-    private int inter;
-    private JComboBox<String> pname;
+    private PlayerSelector player;
+    private JTextField fumTF;
+    private JTextField intTF;
+    private JButton update;
+    private JButton delete;
 
     public AddTurnOverStatsCard() {
         run();
     }
 
     public void run() {
+        player = new PlayerSelector();
+        fumTF = new JTextField(10);
+        intTF = new JTextField(10);
+        update = new JButton("Update");
+        update.addActionListener(e -> clickedUpdate());
+        delete = new JButton("Delete");
+        delete.addActionListener(e -> clickedDelete());
 
-        JPanel mpan = this;
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JPanel center = new JPanel();
-        center.setLayout(new GridLayout(2, 3, 5, 5));
-        JLabel l1 = new JLabel("Player");
-        JLabel l2 = new JLabel("Fumbles");
-        JLabel l3 = new JLabel("Interceptions");
-        //JTextField pname = new JTextField(10);
-        //JComboBox<String>
-        pname = new JComboBox<>(new StatGetter().getTONames().toArray(new String[0]));
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 3;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(player, gbc);
 
-        pname.addActionListener((e) -> pname.getSelectedItem());
-        JTextField atts = new JTextField(10);
-        JTextField comps = new JTextField(10);
-        center.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        center.add(l1);
-        center.add(l2);
-        center.add(l3);
+        gbc.gridheight = 1;
+        gbc.gridwidth = 1;
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        add(new JLabel("Fumbles"), gbc);
+        gbc.gridx = 4;
+        add(new JLabel("Interceptions"), gbc);
 
-        center.add(pname);
-        center.add(atts);
-        center.add(comps);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        add(fumTF, gbc);
+        gbc.gridx = 4;
+        add(intTF, gbc);
 
-        mpan.add(center, BorderLayout.CENTER);
-        JButton create = new JButton("Create");
-        create.addActionListener(e -> {
-            //name = pname.getText();
-            try {
-                fum = Integer.parseInt(atts.getText());
-                inter = Integer.parseInt(comps.getText());
-
-                createStat(name, fum, inter);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        JButton update = new JButton("Update");
-        update.addActionListener(e -> {
-
-            try {
-                name = (String) pname.getSelectedItem();
-                fum = Integer.parseInt(atts.getText());
-                inter = Integer.parseInt(comps.getText());
-
-                updateStat(name, fum, inter);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        JButton delete = new JButton("Delete");
-        delete.addActionListener(e -> {
-            name = (String) pname.getSelectedItem();
-            if (new StatUpdate().deleteStat("TURNOVER_STATISTICS", name)) {
-                JOptionPane.showMessageDialog(this, "Players stats deleted.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        mpan.add(update, BorderLayout.SOUTH);
-        mpan.add(delete, BorderLayout.SOUTH);
-
+        gbc.anchor = GridBagConstraints.SOUTHEAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridy = 3;
+        gbc.gridx = 3;
+        add(update, gbc);
+        gbc.gridx = 4;
+        add(delete, gbc);
     }
 
-    public void createStat(String p, int f, int i) {
-
-        if (new StatUpdate().createTOStat(p, f, i)) {
-            JOptionPane.showMessageDialog(this, "Player stats successfully created");
+    public void updateStat(String p, int f, int i) {
+        StatUpdate sql = new StatUpdate();
+        if (sql.updateTOStat(p, f, i) || sql.createTOStat(p, f, i)) {
+            JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void updateStat(String p, int f, int i) {
-        if (new StatUpdate().updateTOStat(p, f, i)) {
-            JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
+    private void clickedDelete() {
+        String name = player.getSelectedPlayer();
+        if (new StatUpdate().deleteStat("TURNOVER_STATISTICS", name)) {
+            JOptionPane.showMessageDialog(this, "Players stats deleted.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void clickedUpdate() {
+        try {
+            String name = player.getSelectedPlayer();
+            int fum = Integer.parseInt(fumTF.getText());
+            int inter = Integer.parseInt(intTF.getText());
+
+            updateStat(name, fum, inter);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
