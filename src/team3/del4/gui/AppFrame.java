@@ -37,25 +37,25 @@ public class AppFrame extends JFrame {
 
         // create main menu
         menuPanel = new JPanel();
-        viewPlayersBtn = new JButton("Get Players");
+        viewPlayersBtn = new JButton("Get Rosters");
         viewPlayersBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayers"));
-        getTeamStatsBtn = new JButton("Get Team Statistics");
+        getTeamStatsBtn = new JButton("Get Team Data");
         getTeamStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetTeamStats"));
-        getPlayerStatsBtn = new JButton("Get Player Statistics");
+        getPlayerStatsBtn = new JButton("Get Player Data");
         getPlayerStatsBtn.addActionListener((e) -> layout.show(cardPanel, "GetPlayerStats"));
-        addPlayerBtn = new JButton("Update player");
+        addPlayerBtn = new JButton("Update Player");
         addPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "UpdatePlayer"));
-        createPlayerBtn = new JButton("Create player");
+        createPlayerBtn = new JButton("Create Player");
         createPlayerBtn.addActionListener((e) -> layout.show(cardPanel, "CreatePlayer"));
-        addPassBtn = new JButton("Add Passing Stats");
+        addPassBtn = new JButton("Edit Passing Stats");
         addPassBtn.addActionListener((e) -> layout.show(cardPanel, "AddPassStats"));
-        addRecBtn = new JButton("Add Reception Stats");
+        addRecBtn = new JButton("Edit Reception Stats");
         addRecBtn.addActionListener((e) -> layout.show(cardPanel, "AddRecStats"));
-        addRushBtn = new JButton("Add Rushing Stats");
+        addRushBtn = new JButton("Edit Rushing Stats");
         addRushBtn.addActionListener((e) -> layout.show(cardPanel, "AddRushStats"));
-        addKicksBtn = new JButton("Add Kicking Stats");
+        addKicksBtn = new JButton("Edit Kicking Stats");
         addKicksBtn.addActionListener((e) -> layout.show(cardPanel, "AddKickStats"));
-        addTOBtn = new JButton("Add Turnover Stats");
+        addTOBtn = new JButton("Edit Turnover Stats");
         addTOBtn.addActionListener((e) -> layout.show(cardPanel, "AddTOStats"));
 
         menuPanel.setLayout(new GridBagLayout());
