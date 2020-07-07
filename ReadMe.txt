@@ -15,6 +15,6 @@ in db.properties following the guidline below:
     user = (your database username)
     password = (your password for your database)
 
-4. Load the project up in an ide and link the .jar jdbc driver in libraries in the project structure.
+4. Load the project up in an ide and link the .jar jdbc driver as a library in the project structure.
 
 5. Run App.java.
