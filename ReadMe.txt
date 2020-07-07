@@ -15,6 +15,12 @@ in db.properties following the guidline below:
     user = (your database username)
     password = (your password for your database)
 
-4. Load the project up in an ide and link the .jar jdbc driver as a library in the project structure.
+4. Create a new java project in your IDE.
 
-5. Run App.java.
+5. Replace the src folder in your new project with the src folder from the source code.
+
+6. Link the .jar jdbc driver as a library in the project structure.
+
+7. Run App.java.
+
+*** This was used with Java 11
