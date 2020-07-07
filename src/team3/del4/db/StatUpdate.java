@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package team3.del4.db;
+package db;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,6 +13,82 @@ import java.sql.SQLException;
  * @author Socce
  */
 public class StatUpdate extends DBConnector {
+
+    public boolean updatePlayerBio(String name, String pos, String team, String dob,
+            String ht, int wt, int exp, int games, int num) {
+        try (PreparedStatement stmt = prepareStatement("UPDATE PLAYER Set position =(?), team = (?), dob=(?), height=(?), weight=(?), experience=(?), games_played=(?), jersey_num=(?) Where name =(?)")) {
+            stmt.setString(1, pos);
+            stmt.setString(2, team);
+            stmt.setString(3, dob);
+            stmt.setString(4, ht);
+            stmt.setInt(5, wt);
+            stmt.setInt(6, exp);
+            stmt.setInt(7, games);
+            stmt.setInt(8, num);
+            stmt.setString(9, name);
+
+            if (stmt.executeUpdate() > 0) {
+                System.out.println("SUCCESSFUL");
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean insertPlayer(String name, String pos, String team, String dob,
+            String ht, int wt, int exp, int games, int num) {
+        // assuming all parameters are valid...
+
+        // try-with-resources
+        // by declaring the Statement in parentheses here, Java will make sure it gets closed no matter what happens
+        try (PreparedStatement stmt = prepareStatement("Insert into PLAYER(name, position, team, dob, height, weight, experience, games_played, jersey_num) values(?,?,?,?,?,?,?,?,?)")) {
+            stmt.setString(1, name);
+            stmt.setString(2, pos);
+            stmt.setString(3, team);
+            stmt.setString(4, dob);
+            stmt.setString(5, ht);
+            stmt.setInt(6, wt);
+            stmt.setInt(7, exp);
+            stmt.setInt(8, games);
+            stmt.setInt(9, num);
+
+            if (stmt.executeUpdate() > 0) {
+                System.out.println("SUCCESSFUL");
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deletePlayer(String name) {
+        try (PreparedStatement stmt = prepareStatement("Delete From player Where name = '" + name + "'")) {
+
+            if (stmt.executeUpdate() > 0) {
+                System.out.println("SUCCESSFUL");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteStat(String place, String name) {
+        try (PreparedStatement stmt = prepareStatement("Delete From " + place + " Where player_name = '" + name + "'")) {
+
+            if (stmt.executeUpdate() > 0) {
+                System.out.println("SUCCESSFUL");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean updatePassStat(String name, int atts, int com, int yrds, int td) {
         try (PreparedStatement stmt = prepareStatement("UPDATE PASSING_STATISTICS Set pass_att = (?), pass_comp = (?), pass_yds = (?), pass_td = (?) where player_name = (?)")) {
@@ -77,19 +153,6 @@ public class StatUpdate extends DBConnector {
 
     }
 
-    public boolean deleteRushStat(String name) {
-        try (PreparedStatement stmt = prepareStatement("Delete From RUSHING_STATISTICS Where player_name = (?)")) {
-            stmt.setString(1, name);
-            if (stmt.executeUpdate() > 0) {
-                System.out.println("SUCCESSFUL");
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public boolean createRushStat(String name, int ra, int ry, int rt) {
         try (PreparedStatement stmt = prepareStatement("Insert into RUSHING_STATISTICS(player_name, rush_att, rush_yds, rush_td) values(?,?,?,?)")) {
             //prepared statement takes in parameters.
@@ -128,19 +191,6 @@ public class StatUpdate extends DBConnector {
 
         return false;
 
-    }
-
-    public boolean deleteStat(String place, String name) {
-        try (PreparedStatement stmt = prepareStatement("Delete From " + place + " Where player_name = '" + name + "'")) {
-
-            if (stmt.executeUpdate() > 0) {
-                System.out.println("SUCCESSFUL");
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     public boolean createRecStat(String name, int rec, int ry, int rt) {
