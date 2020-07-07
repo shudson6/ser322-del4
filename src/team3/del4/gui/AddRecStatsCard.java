@@ -45,7 +45,7 @@ public class AddRecStatsCard extends JPanel {
         gbc.gridheight = 1;
         gbc.gridx = 3;
         gbc.gridy = 1;
-        add(new JLabel("Att"), gbc);
+        add(new JLabel("Rec"), gbc);
         gbc.gridx = 4;
         add(new JLabel("Yds"), gbc);
         gbc.gridx = 5;
