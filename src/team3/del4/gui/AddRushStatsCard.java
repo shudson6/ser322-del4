@@ -26,9 +26,9 @@ public class AddRushStatsCard extends JPanel {
         attTF = new JTextField(10);
         ydsTF = new JTextField(10);
         tdsTF = new JTextField(10);
-        JButton update = new JButton("Update");
+        update = new JButton("Update");
         update.addActionListener(e -> clickedUpdate());
-        JButton delete = new JButton("Delete");
+        delete = new JButton("Delete");
         delete.addActionListener(e -> clickedDelete());
 
         setLayout(new GridBagLayout());
