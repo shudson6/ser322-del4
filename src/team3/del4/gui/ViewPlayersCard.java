@@ -3,6 +3,7 @@ package team3.del4.gui;
 import team3.del4.db.StatGetter;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
@@ -24,13 +25,13 @@ public class ViewPlayersCard extends JPanel{
     JScrollPane scrollPane;
 
     public ViewPlayersCard(){
-        setLayout(new GridBagLayout());
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         StatGetter sg = new StatGetter();
         List<String> teams = sg.getAllTeams();
         List<String> positions = sg.getPositions();
-
 
         positionCB = new JComboBox(createPosCBM(positions));
         teamCB = new JComboBox(createTeamCBM(teams));
@@ -89,23 +90,29 @@ public class ViewPlayersCard extends JPanel{
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        add(new JLabel("Position"), gbc);
+        inputPanel.add(new JLabel("Position"), gbc);
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        add(new JLabel("Team"), gbc);
+        inputPanel.add(new JLabel("Team"), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(positionCB, gbc);
+        inputPanel.add(positionCB, gbc);
         gbc.gridx = 2;
-        add(teamCB, gbc);
+        inputPanel.add(teamCB, gbc);
         gbc.gridx = 4;
-        add(goBtn, gbc);
+        inputPanel.add(goBtn, gbc);
 
-        gbc.gridx = 3;
+        gbc.gridwidth = 6;
+        gbc.gridheight = 6;
+        gbc.gridx = 0;
         gbc.gridy = 2;
-        add(scrollPane, gbc);
+        //add(scrollPane, gbc);
+
+        setLayout(new BorderLayout());
+        add(inputPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     private ComboBoxModel<String> createTeamCBM(List<String> teams) {
