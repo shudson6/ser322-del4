@@ -106,7 +106,7 @@ public class StatGetter extends DBConnector {
             sb.append("'");
         }
         sb.append(";");
-        return getStringListPlayers(sb.toString());
+        return getStringList(sb.toString());
     }
 
     private List<String> getStringList(String query) {

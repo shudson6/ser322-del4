@@ -11,93 +11,119 @@ import team3.del4.db.StatUpdate;
 import javax.swing.*;
 
 public class AddKickStatsCard extends JPanel {
-
-    private String name;
-    private int att;
-    private int com;
-    private JComboBox<String> pname;
+    private PlayerSelector playerCB;
+    private JTextField attTF;
+    private JTextField madeTF;
 
     public AddKickStatsCard() {
-        run();
+        init();
     }
 
-    public void run() {
+    public void init() {
+        playerCB = new PlayerSelector();
+        attTF = new JTextField(10);
+        madeTF = new JTextField(10);
 
-        JPanel mpan = this;
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JPanel center = new JPanel();
-        center.setLayout(new GridLayout(2, 3, 5, 5));
-        JLabel l1 = new JLabel("Player");
-        JLabel l2 = new JLabel("FG_Att");
-        JLabel l3 = new JLabel("Field_Goals");
-        pname = new JComboBox<>(new StatGetter().getKickNames().toArray(new String[0]));
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.gridx = 0;
+        gbc.gridwidth = 3;
+        gbc.gridy = 0;
+        gbc.gridheight = 3;
+        add(playerCB, gbc);
 
-        pname.addActionListener((e) -> pname.getSelectedItem());
+        // alignment
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        add(Box.createVerticalStrut(11), gbc);
 
-        JTextField atts = new JTextField(10);
-        //String rusha = "";
-        JTextField comps = new JTextField(10);
-        center.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        center.add(l1);
-        center.add(l2);
-        center.add(l3);
+        // labels for text fields
+        gbc.gridwidth = 1;
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        add(new JLabel("Att"), gbc);
+        gbc.gridx = 4;
+        add(new JLabel("Made"), gbc);
 
-        center.add(pname);
-        center.add(atts);
-        center.add(comps);
+        // text fields themselves
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        add(attTF, gbc);
+        gbc.gridx = 4;
+        add(madeTF, gbc);
 
-        mpan.add(center, BorderLayout.CENTER);
-        JButton create = new JButton("Create");
-        create.addActionListener(e -> {
-            // name = getText();
-            try {
-                att = Integer.parseInt(atts.getText());
-                com = Integer.parseInt(comps.getText());
+        // the buttons
+//        JButton create = new JButton("Create");
+//        create.addActionListener(e -> clickedCreate());
 
-                createStat(name, att, com);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-            }
-        });
         JButton update = new JButton("Update");
-        update.addActionListener(e -> {
-            try {
-                name = (String) pname.getSelectedItem();
-                att = Integer.parseInt(atts.getText());
-                com = Integer.parseInt(comps.getText());
+        update.addActionListener(e -> clickedUpdate());
 
-                updateStat(name, att, com);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-            }
-        });
         JButton delete = new JButton("Delete");
-        delete.addActionListener(e -> {
-            name = (String) pname.getSelectedItem();
-            if (new StatUpdate().deleteStat("KICKING_STATISTICS", name)) {
-                JOptionPane.showMessageDialog(this, "Players stats deleted.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        mpan.add(update, BorderLayout.SOUTH);
-        mpan.add(delete, BorderLayout.SOUTH);
+        delete.addActionListener(e -> clickedDelete());
+
+        // put them underneath, sort-of right-aligned
+        gbc.anchor = GridBagConstraints.SOUTHEAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+//        add(create, gbc);
+        gbc.gridx = 3;
+        add(update, gbc);
+        gbc.gridx = 4;
+        add(delete, gbc);
     }
 
     public void updateStat(String p, int a, int c) {
-
-        if (new StatUpdate().updateKickStat(p, a, c)) {
+        StatUpdate sql = new StatUpdate();
+        // try update first
+        if (sql.updateKickStat(p, a, c) || sql.createKickStat(p, a, c)) {
             JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Could not insert nor update stats.", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void createStat(String p, int a, int c) {
-        if (new StatUpdate().createKickStat(p, a, c)) {
-            JOptionPane.showMessageDialog(this, "Player stats successfully created");
+//    public void createStat(String p, int a, int c) {
+//        if (new StatUpdate().createKickStat(p, a, c)) {
+//            JOptionPane.showMessageDialog(this, "Player stats successfully created");
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Could not insert stat--maybe Update is appropriate.", "SQL Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+//
+//    private void clickedCreate() {
+//        try {
+//            int att = Integer.parseInt(attTF.getText());
+//            int com = Integer.parseInt(madeTF.getText());
+//
+//            createStat(playerCB.getSelectedPlayer(), att, com);
+//        } catch (NumberFormatException ex) {
+//            JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+
+    private void clickedUpdate() {
+        try {
+            int att = Integer.parseInt(attTF.getText());
+            int com = Integer.parseInt(madeTF.getText());
+
+            updateStat(playerCB.getSelectedPlayer(), att, com);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void clickedDelete() {
+        if (new StatUpdate().deleteStat("KICKING_STATISTICS", playerCB.getSelectedPlayer())) {
+            JOptionPane.showMessageDialog(this, "Players stats deleted.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
