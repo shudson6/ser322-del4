@@ -12,103 +12,102 @@ import java.awt.*;
 import javax.swing.*;
 
 public class AddPassStatsCard extends JPanel {
+    private PlayerSelector player;
+    private JTextField attTF;
+    private JTextField compTF;
+    private JTextField ydsTF;
+    private JTextField tdsTF;
+    private JButton update;
+    private JButton delete;
 
     public AddPassStatsCard() {
         init();
     }
 
     public void init() {
+        player = new PlayerSelector();
+        attTF = new JTextField(10);
+        compTF = new JTextField(10);
+        ydsTF = new JTextField(10);
+        tdsTF = new JTextField(10);
 
-        JPanel mpan = this;
+        update = new JButton("Update");
+        update.addActionListener(e -> clickedUpdate());
 
-        JPanel center = new JPanel();
-        center.setLayout(new GridLayout(2, 5, 5, 5));
+        delete = new JButton("Delete");
+        delete.addActionListener(e -> clickedDelete());
 
-        JLabel l1 = new JLabel("Player");
-        JLabel l2 = new JLabel("Pass_Att");
-        JLabel l3 = new JLabel("Pass_Comp");
-        JLabel l4 = new JLabel("Pass_Yds");
-        JLabel l5 = new JLabel("Pass_Tds");
-        pname = new JComboBox<>(new StatGetter().getPassNames().toArray(new String[0]));
-        pname.addActionListener((e) -> pname.getSelectedItem());
-        JTextField atts = new JTextField(10);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JTextField comps = new JTextField(10);
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.gridx = 0;
+        gbc.gridwidth = 3;
+        gbc.gridy = 0;
+        gbc.gridheight = 3;
+        add(player, gbc);
 
-        JTextField yds = new JTextField(10);
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        add(new JLabel("Att"), gbc);
+        gbc.gridx = 4;
+        add(new JLabel("Comp"), gbc);
+        gbc.gridx = 5;
+        add(new JLabel("Yds"), gbc);
+        gbc.gridx = 6;
+        add(new JLabel("TDs"), gbc);
 
-        JTextField tds = new JTextField(10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        add(attTF, gbc);
+        gbc.gridx = 4;
+        add(compTF, gbc);
+        gbc.gridx = 5;
+        add(ydsTF, gbc);
+        gbc.gridx = 6;
+        add(tdsTF, gbc);
 
-        center.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        center.add(l1);
-        center.add(l2);
-        center.add(l3);
-        center.add(l4);
-        center.add(l5);
-        center.add(pname);
-        center.add(atts);
-        center.add(comps);
-        center.add(yds);
-        center.add(tds);
-        mpan.add(center, BorderLayout.CENTER);
-        JButton create = new JButton("Create");
-        create.addActionListener(e -> {
-            // name = pname.getText();
-            try {
-                att = Integer.parseInt(atts.getText());
-                com = Integer.parseInt(comps.getText());
-                yd = Integer.parseInt(yds.getText());
-                td = Integer.parseInt(tds.getText());
-
-                createStat(name, att, com, yd, td);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        JButton delete = new JButton("Delete");
-        delete.addActionListener(e -> {
-            name = (String) pname.getSelectedItem();
-            if (new StatUpdate().deleteStat("PASSING_STATISTICS", name)) {
-                JOptionPane.showMessageDialog(this, "Players stats deleted.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
-        JButton update = new JButton("Update");
-        update.addActionListener(e -> {
-            try {
-                name = (String) pname.getSelectedItem();
-                att = Integer.parseInt(atts.getText());
-                com = Integer.parseInt(comps.getText());
-                yd = Integer.parseInt(yds.getText());
-                td = Integer.parseInt(tds.getText());
-
-                updateStat(name, att, com, yd, td);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        mpan.add(update, BorderLayout.SOUTH);
-        mpan.add(delete, BorderLayout.SOUTH);
-
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridx = 5;
+        gbc.gridy = 3;
+        add(update, gbc);
+        gbc.gridx = 6;
+        add(delete, gbc);
     }
 
     public void updateStat(String p, int a, int c, int y, int t) {
         System.out.print("This is the player : " + p + "  --pass attempts: " + a + "--pass comps: " + c + " --pass yards: " + y + " --passtds: " + t);
-        if (new StatUpdate().updatePassStat(p, a, c, y, t)) {
+        StatUpdate sql = new StatUpdate();
+        if (sql.updatePassStat(p, a, c, y, t) || sql.createPassStat(p, a, c, y, t)) {
             JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Could not insert nor update stats.", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void createStat(String p, int a, int c, int y, int t) {
-        System.out.print("This is the player : " + p + "  --pass attempts: " + a + "--pass comps: " + c + " --pass yards: " + y + " --passtds: " + t);
-        if (new StatUpdate().createPassStat(p, a, c, y, t)) {
-            JOptionPane.showMessageDialog(this, "Player stats successfully created.");
+    private void clickedUpdate() {
+        try {
+            String name = player.getSelectedPlayer();
+            int att = Integer.parseInt(attTF.getText());
+            int com = Integer.parseInt(compTF.getText());
+            int yd = Integer.parseInt(ydsTF.getText());
+            int td = Integer.parseInt(tdsTF.getText());
+
+            updateStat(name, att, com, yd, td);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void clickedDelete() {
+        String name = player.getSelectedPlayer();
+        if (new StatUpdate().deleteStat("PASSING_STATISTICS", name)) {
+            JOptionPane.showMessageDialog(this, "Players stats deleted.");
         } else {
-            JOptionPane.showMessageDialog(this, "Failed to add player", "SQL Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to delete stats", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

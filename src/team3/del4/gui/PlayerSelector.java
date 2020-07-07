@@ -98,11 +98,15 @@ public class PlayerSelector extends JComponent {
     }
 
     private JComboBox<String> createTeamCB() {
-        return new JComboBox<>(createCBModel(new StatGetter().getTeams(null), true));
+        JComboBox<String> cb = new JComboBox<>(createCBModel(new StatGetter().getTeams(null), true));
+        cb.setSelectedIndex(0);
+        return cb;
     }
 
     private JComboBox<String> createPosCB() {
-        return new JComboBox<>(createCBModel(new StatGetter().getPositions(), true));
+        JComboBox<String> cb = new JComboBox<>(createCBModel(new StatGetter().getPositions(), true));
+        cb.setSelectedIndex(0);
+        return cb;
     }
 
     private JComboBox<String> createPlayerCB() {
