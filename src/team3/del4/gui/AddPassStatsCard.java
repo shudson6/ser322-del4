@@ -13,21 +13,11 @@ import javax.swing.*;
 
 public class AddPassStatsCard extends JPanel {
 
-    /**
-     * @param args the command line arguments
-     */
-    private String name;
-    private int att;
-    private int com;
-    private int yd;
-    private int td;
-    private JComboBox<String> pname;
-
     public AddPassStatsCard() {
-        run();
+        init();
     }
 
-    public void run() {
+    public void init() {
 
         JPanel mpan = this;
 

@@ -14,6 +14,8 @@ public class AddKickStatsCard extends JPanel {
     private PlayerSelector playerCB;
     private JTextField attTF;
     private JTextField madeTF;
+    private JButton update;
+    private JButton delete;
 
     public AddKickStatsCard() {
         init();
@@ -58,21 +60,16 @@ public class AddKickStatsCard extends JPanel {
         add(madeTF, gbc);
 
         // the buttons
-//        JButton create = new JButton("Create");
-//        create.addActionListener(e -> clickedCreate());
-
-        JButton update = new JButton("Update");
+        update = new JButton("Update");
         update.addActionListener(e -> clickedUpdate());
 
-        JButton delete = new JButton("Delete");
+        delete = new JButton("Delete");
         delete.addActionListener(e -> clickedDelete());
 
         // put them underneath, sort-of right-aligned
         gbc.anchor = GridBagConstraints.SOUTHEAST;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 2;
         gbc.gridy = 3;
-//        add(create, gbc);
         gbc.gridx = 3;
         add(update, gbc);
         gbc.gridx = 4;
