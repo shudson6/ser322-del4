@@ -79,7 +79,7 @@ public class AddPassStatsCard extends JPanel {
     }
 
     public void updateStat(String p, int a, int c, int y, int t) {
-        System.out.print("This is the player : " + p + "  --pass attempts: " + a + "--pass comps: " + c + " --pass yards: " + y + " --passtds: " + t);
+       
         StatUpdate sql = new StatUpdate();
         if (sql.updatePassStat(p, a, c, y, t) || sql.createPassStat(p, a, c, y, t)) {
             JOptionPane.showMessageDialog(this, "Players stats updated successfully.");
