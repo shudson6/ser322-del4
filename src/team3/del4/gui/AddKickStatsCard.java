@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package team3.del4.gui;
 
-import team3.del4.db.StatGetter;
 import java.awt.*;
 import team3.del4.db.StatUpdate;
 import javax.swing.*;
@@ -85,25 +79,6 @@ public class AddKickStatsCard extends JPanel {
             JOptionPane.showMessageDialog(this, "Could not insert nor update stats.", "SQL Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-//    public void createStat(String p, int a, int c) {
-//        if (new StatUpdate().createKickStat(p, a, c)) {
-//            JOptionPane.showMessageDialog(this, "Player stats successfully created");
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Could not insert stat--maybe Update is appropriate.", "SQL Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-//
-//    private void clickedCreate() {
-//        try {
-//            int att = Integer.parseInt(attTF.getText());
-//            int com = Integer.parseInt(madeTF.getText());
-//
-//            createStat(playerCB.getSelectedPlayer(), att, com);
-//        } catch (NumberFormatException ex) {
-//            JOptionPane.showMessageDialog(this, "Failed to add player", "Invalid input for number", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
 
     private void clickedUpdate() {
         try {
