@@ -25,6 +25,7 @@ in db.properties following the guidline below:
 
 *** This was used with Java 11
 
+
 Alternative Execution (Command-Line):
 
 3. From the directory containing the src/ folder, run:
@@ -38,3 +39,16 @@ Alternative Execution (Command-Line):
    As usual, this assumes the <dest> folder and location of <driver> are on the classpath.
    One can also copy src/resources/db.properties to <dest>/resources/db.properties
    and edit it as in #3 above to avoid providing that info on the command-line.
+
+
+
+Individual Contributions
+------------------------
+
+Sam - Helped update the ER diagram. Recorded video for the ER diagram as well as the intro. Edited the videos together and uploaded the final video. Developed the get roster, get player stats, and get team stats functionality of the final program.
+
+Kyle -
+
+Robert -
+
+Steven -
