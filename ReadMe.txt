@@ -51,4 +51,4 @@ Kyle -
 
 Robert - I did the video for the GUI interface and database functionality.   
 
-Steven -
+Steven - Created initial java framework (DBConnector and basic StatGetter methods, App/AppFrame, and GUI template) and PlayerSelector. Finalized layout of stat editing UIs. Code walkthrough.
