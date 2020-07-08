@@ -47,9 +47,9 @@ Individual Contributions
 
 Sam - Helped update the ER diagram. Recorded video for the ER diagram as well as the intro. Edited the videos together and uploaded the final video. Developed the get roster, get player stats, and get team stats functionality of the final program.
 
-Kyle -
+Kyle - I updated and formatted the sql files according to deliverable 3 feedback. Helped adjust the ER diagram. I developed the "add" stat cards and implemented them to interact with the sql database through the "statupdate" java file- including the functionality of updating/deleting/creating statistics.
 
-Robert - I did the video for the GUI interface and database functionality.   
+Robert - I did the video for the GUI interface and database functionality. Helped with functionality of updating/creating new player. 
 
 Steven - Created initial java framework (DBConnector and basic StatGetter methods, App/AppFrame, and GUI template) and PlayerSelector. Finalized layout of stat editing UIs. Code walkthrough.
 
