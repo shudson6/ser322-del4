@@ -27,7 +27,7 @@ in db.properties following the guidline below:
 
 
 Alternative Execution (Command-Line):
-
+-------------------------------------
 3. From the directory containing the src/ folder, run:
 
    > javac -d <dest> src/team3/del4/gui/*.java src/team3/del4/db/*.java
@@ -43,7 +43,7 @@ Alternative Execution (Command-Line):
 
 
 Individual Contributions
-------------------------
+------------------------------------
 
 Sam - Helped update the ER diagram. Recorded video for the ER diagram as well as the intro. Edited the videos together and uploaded the final video. Developed the get roster, get player stats, and get team stats functionality of the final program.
 
@@ -52,3 +52,9 @@ Kyle -
 Robert - I did the video for the GUI interface and database functionality.   
 
 Steven - Created initial java framework (DBConnector and basic StatGetter methods, App/AppFrame, and GUI template) and PlayerSelector. Finalized layout of stat editing UIs. Code walkthrough.
+
+
+Video Link
+------------------------------------
+https://youtu.be/WbjTQb-wmow
+
