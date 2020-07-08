@@ -56,5 +56,6 @@ Steven - Created initial java framework (DBConnector and basic StatGetter method
 
 Video Link
 ------------------------------------
-https://youtu.be/WbjTQb-wmow
+*** We have 2 parts for our video, they are included in the playlist link below ***
+https://www.youtube.com/playlist?list=PLxI-fPSCF7qb0JYGbp2kHeCLLyozjIevK
 
