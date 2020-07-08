@@ -43,12 +43,4 @@ public class DBConnector {
         }
         return DriverManager.getConnection(dbProps.getProperty("dbUrl"), dbProps);
     }
-
-    public Statement getStatement() throws SQLException {
-        return getConnection().createStatement();
-    }
-
-    public PreparedStatement prepareStatement(String sql) throws SQLException {
-        return getConnection().prepareStatement(sql);
-    }
 }

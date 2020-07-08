@@ -57,28 +57,6 @@ public class PlayerSelector extends JComponent {
         add(posCB, gbc);
         gbc.gridy = 2;
         add(playerCB, gbc);
-
-//        // three labelled dropdowns: three jpanels in a vertical stack
-//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-//
-//        JPanel teamPanel = new JPanel();
-//        teamPanel.setLayout(new BoxLayout(teamPanel, BoxLayout.X_AXIS));
-//        teamPanel.add(new JLabel("Team"));
-//        teamPanel.add(teamCB);
-//
-//        JPanel posPanel = new JPanel();
-//        posPanel.setLayout(new BoxLayout(posPanel, BoxLayout.X_AXIS));
-//        posPanel.add(new JLabel("Position"));
-//        posPanel.add(posCB);
-//
-//        JPanel playerPanel = new JPanel();
-//        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
-//        playerPanel.add(new JLabel("Player"));
-//        playerPanel.add(playerCB);
-//
-//        add(teamPanel);
-//        add(posPanel);
-//        add(playerPanel);
     }
 
     public JComboBox<String> getPlayerComboBox() {
