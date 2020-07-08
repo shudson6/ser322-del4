@@ -49,6 +49,6 @@ Sam - Helped update the ER diagram. Recorded video for the ER diagram as well as
 
 Kyle -
 
-Robert -
+Robert - I did the video for the GUI interface and database functionality.   
 
 Steven -
