@@ -5,6 +5,7 @@
  */
 package team3.del4.db;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -16,7 +17,8 @@ public class StatUpdate extends DBConnector {
 
     public boolean updatePlayerBio(String name, String pos, String team, String dob,
             String ht, int wt, int exp, int games, int num) {
-        try (PreparedStatement stmt = prepareStatement("UPDATE PLAYER Set position =(?), team = (?), dob=(?), height=(?), weight=(?), experience=(?), games_played=(?), jersey_num=(?) Where name =(?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("UPDATE PLAYER Set position =(?), team = (?), dob=(?), height=(?), weight=(?), experience=(?), games_played=(?), jersey_num=(?) Where name =(?)");
             stmt.setString(1, pos);
             stmt.setString(2, team);
             stmt.setString(3, dob);
@@ -43,7 +45,8 @@ public class StatUpdate extends DBConnector {
 
         // try-with-resources
         // by declaring the Statement in parentheses here, Java will make sure it gets closed no matter what happens
-        try (PreparedStatement stmt = prepareStatement("Insert into PLAYER(name, position, team, dob, height, weight, experience, games_played, jersey_num) values(?,?,?,?,?,?,?,?,?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Insert into PLAYER(name, position, team, dob, height, weight, experience, games_played, jersey_num) values(?,?,?,?,?,?,?,?,?)");
             stmt.setString(1, name);
             stmt.setString(2, pos);
             stmt.setString(3, team);
@@ -65,7 +68,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean deletePlayer(String name) {
-        try (PreparedStatement stmt = prepareStatement("Delete From player Where name = '" + name + "'")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Delete From player Where name = '" + name + "'");
 
             if (stmt.executeUpdate() > 0) {
                 System.out.println("SUCCESSFUL");
@@ -78,7 +82,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean deleteStat(String place, String name) {
-        try (PreparedStatement stmt = prepareStatement("Delete From " + place + " Where player_name = '" + name + "'")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Delete From " + place + " Where player_name = '" + name + "'");
 
             if (stmt.executeUpdate() > 0) {
                 System.out.println("SUCCESSFUL");
@@ -91,7 +96,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean updatePassStat(String name, int atts, int com, int yrds, int td) {
-        try (PreparedStatement stmt = prepareStatement("UPDATE PASSING_STATISTICS Set pass_att = (?), pass_comp = (?), pass_yds = (?), pass_td = (?) where player_name = (?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("UPDATE PASSING_STATISTICS Set pass_att = (?), pass_comp = (?), pass_yds = (?), pass_td = (?) where player_name = (?)");
             //prepared statement takes in parameters.
 
             stmt.setInt(1, atts);
@@ -113,7 +119,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean createPassStat(String name, int atts, int com, int yrds, int td) {
-        try (PreparedStatement stmt = prepareStatement("Insert into PASSING_STATISTICS(player_name, pass_att, pass_comp, pass_yds, pass_td) values(?,?,?,?,?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Insert into PASSING_STATISTICS(player_name, pass_att, pass_comp, pass_yds, pass_td) values(?,?,?,?,?)");
             //prepared statement takes in parameters.
             stmt.setString(1, name);
             stmt.setInt(2, atts);
@@ -133,7 +140,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean updateRushStat(String p, int ra, int ry, int rt) {
-        try (PreparedStatement stmt = prepareStatement("UPDATE RUSHING_STATISTICS Set rush_att = (?), rush_yds = (?), rush_td = (?) where player_name = (?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("UPDATE RUSHING_STATISTICS Set rush_att = (?), rush_yds = (?), rush_td = (?) where player_name = (?)");
             //prepared statement takes in parameters.
 
             stmt.setInt(1, ra);
@@ -154,7 +162,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean createRushStat(String name, int ra, int ry, int rt) {
-        try (PreparedStatement stmt = prepareStatement("Insert into RUSHING_STATISTICS(player_name, rush_att, rush_yds, rush_td) values(?,?,?,?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Insert into RUSHING_STATISTICS(player_name, rush_att, rush_yds, rush_td) values(?,?,?,?)");
             //prepared statement takes in parameters.
             stmt.setString(1, name);
             stmt.setInt(2, ra);
@@ -173,7 +182,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean updateRecStat(String name, int ra, int ry, int rt) {
-        try (PreparedStatement stmt = prepareStatement("UPDATE RECEIVING_STATISTICS Set receptions = (?), rec_yds = (?), rec_td = (?) where player_name = (?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("UPDATE RECEIVING_STATISTICS Set receptions = (?), rec_yds = (?), rec_td = (?) where player_name = (?)");
             //prepared statement takes in parameters.
 
             stmt.setInt(1, ra);
@@ -194,7 +204,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean createRecStat(String name, int rec, int ry, int rt) {
-        try (PreparedStatement stmt = prepareStatement("Insert into RECEIVING_STATISTICS(player_name, receptions, rec_yds, rec_td) values(?,?,?,?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Insert into RECEIVING_STATISTICS(player_name, receptions, rec_yds, rec_td) values(?,?,?,?)");
             //prepared statement takes in parameters.
             stmt.setString(1, name);
             stmt.setInt(2, rec);
@@ -213,7 +224,8 @@ public class StatUpdate extends DBConnector {
     }
 
     public boolean updateKickStat(String name, int att, int fg) {
-        try (PreparedStatement stmt = prepareStatement("UPDATE KICKING_STATISTICS SET fg_att = (?), field_goals = (?) Where player_name = (?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("UPDATE KICKING_STATISTICS SET fg_att = (?), field_goals = (?) Where player_name = (?)");
             stmt.setInt(1, att);
             stmt.setInt(2, fg);
             stmt.setString(3, name);
@@ -230,7 +242,8 @@ public class StatUpdate extends DBConnector {
 
     public boolean createKickStat(String name, int att, int fg) {
 
-        try (PreparedStatement stmt = prepareStatement("Insert into KICKING_STATISTICS(player_name, fg_att, field_goals) values(?,?,?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Insert into KICKING_STATISTICS(player_name, fg_att, field_goals) values(?,?,?)");
             //prepared statement takes in parameters.
 
             stmt.setString(1, name);
@@ -248,7 +261,8 @@ public class StatUpdate extends DBConnector {
 
     public boolean updateTOStat(String p, int f, int i) {
 
-        try (PreparedStatement stmt = prepareStatement("Update TURNOVER_STATISTICS Set fumbles = (?), interceptions = (?) Where player_name = (?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Update TURNOVER_STATISTICS Set fumbles = (?), interceptions = (?) Where player_name = (?)");
             stmt.setInt(1, f);
             stmt.setInt(2, i);
             stmt.setString(3, p);
@@ -263,7 +277,8 @@ public class StatUpdate extends DBConnector {
 
     public boolean createTOStat(String p, int f, int i) {
 
-        try (PreparedStatement stmt = prepareStatement("Insert into TURNOVER_STATISTICS(player_name, fumbles, interceptions) values(?,?,?)")) {
+        try (Connection c = getConnection()) {
+            PreparedStatement stmt = c.prepareStatement("Insert into TURNOVER_STATISTICS(player_name, fumbles, interceptions) values(?,?,?)");
             //prepared statement takes in parameters.
 
             stmt.setString(1, p);

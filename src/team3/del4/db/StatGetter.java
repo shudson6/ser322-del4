@@ -5,6 +5,7 @@
  */
 package team3.del4.db;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -132,7 +133,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringList(String query) {
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
@@ -146,7 +148,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringListPlayers(String query) {
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
@@ -162,7 +165,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringListPassing(String query) {
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
@@ -190,7 +194,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringListRushing(String query) {
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
@@ -217,7 +222,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringListReceiving(String query) {
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
@@ -242,7 +248,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringListKicking(String query) {
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
@@ -266,7 +273,8 @@ public class StatGetter extends DBConnector {
     }
 
     private List<String> getStringListTeam(String query){
-        try (Statement s = getStatement()) {
+        try (Connection c = getConnection()) {
+            Statement s = c.createStatement();
             ResultSet rs = s.executeQuery(query);
             ArrayList<String> list = new ArrayList<>();
             while (rs.next()) {
