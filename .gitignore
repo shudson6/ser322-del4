@@ -1,0 +1,11 @@
+#intellij stuff
+.idea/
+out/
+*.iml
+*.form
+
+#vim stuff
+*.*~
+
+#cli-compiled class files
+classes/
